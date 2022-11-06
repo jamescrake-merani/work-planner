@@ -40,3 +40,25 @@
    (cons "month" (date-month date))
    (cons "year" (date-year date))
    (cons "zone-offeset" (date-zone-offset date))))
+
+;; A work item does not have to have all these fields - the caller
+;; can expect a #f value if the field doesn't exist. However, callers
+;; may assume certain fields exist, and will of course error when they
+;; don't.
+
+(define (work-item-text item)
+  (assoc-ref item "text"))
+
+(define (work-item-due-date item)
+  (assoc-ref item "due-date"))
+
+;; This is a list of dates, not just one single date. The user might
+;; want to designated dates to work at a certain task without necessarily
+;; finishing it in one day.
+(define (work-item-completed-on item) ;;TODO: Might rename this. Not decided yet.
+  (assoc-ref item "completed-on"))
+
+;; Expected to be false when not done, but when true it should be the
+;; date on which the item was completed, not just #t
+(define (work-item-date item)
+  (assoc-ref item "done"))
