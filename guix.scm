@@ -25,7 +25,8 @@
   (inputs `(("guile" ,guile-3.0)))
   (propagated-inputs `())
   (synopsis "")
-  (description "")
-  (home-page "")
+  (description "A tool for managing your work.")
+  (home-page
+    "https://github.com/jamescrake-merani/work-planner")
   (license license:glp3+))
 
