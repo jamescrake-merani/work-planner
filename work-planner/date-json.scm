@@ -19,7 +19,7 @@
 ;; The purpose of this module is to be able to serialise, and
 ;; deserialise dates from the SRFI-19 module to, and from JSON.
 
-(define (a-list->date a-lst)
+(define-public (a-list->date a-lst)
   (make-date
    (assoc-ref a-lst "nsecs")
    (assoc-ref a-lst "seconds")
@@ -30,7 +30,7 @@
    (assoc-ref a-lst "year")
    (assoc-ref a-lst "zone-offset")))
 
-(define (date->a-list date)
+(define-public (date->a-list date)
   (list
    (cons "nsecs" (date-nanosecond date))
    (cons "seconds" (date-second date))
@@ -46,19 +46,19 @@
 ;; may assume certain fields exist, and will of course error when they
 ;; don't.
 
-(define (work-item-text item)
+(define-public (work-item-text item)
   (assoc-ref item "text"))
 
-(define (work-item-due-date item)
+(define-public (work-item-due-date item)
   (assoc-ref item "due-date"))
 
 ;; This is a list of dates, not just one single date. The user might
 ;; want to designated dates to work at a certain task without necessarily
 ;; finishing it in one day.
-(define (work-item-completed-on item) ;;TODO: Might rename this. Not decided yet.
+(define-public (work-item-completed-on item) ;;TODO: Might rename this. Not decided yet.
   (assoc-ref item "completed-on"))
 
 ;; Expected to be false when not done, but when true it should be the
 ;; date on which the item was completed, not just #t
-(define (work-item-date item)
+(define-public (work-item-date item)
   (assoc-ref item "done"))
