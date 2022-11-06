@@ -25,7 +25,7 @@
    (assoc-ref a-lst "seconds")
    (assoc-ref a-lst "minutes")
    (assoc-ref a-lst "hours")
-   (assoc-ref a-lst "date")
+   (assoc-ref a-lst "day")
    (assoc-ref a-lst "month")
    (assoc-ref a-lst "year")
    (assoc-ref a-lst "zone-offset")))
@@ -36,7 +36,7 @@
    (cons "seconds" (date-second date))
    (cons "minutes" (date-minute date))
    (cons "hours" (date-hour date))
-   (cons "date" (date-day date)) ;; I don't know why these have different names.
+   (cons "day" (date-day date)) ;; I don't know why these have different names.
    (cons "month" (date-month date))
    (cons "year" (date-year date))
    (cons "zone-offeset" (date-zone-offset date))))
