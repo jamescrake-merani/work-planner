@@ -1,0 +1,27 @@
+(hall-description
+  (name "work-planer")
+  (prefix "")
+  (version "0.1")
+  (author "James Crake-Merani")
+  (copyright (2022))
+  (synopsis "")
+  (description "")
+  (home-page "")
+  (license glp3+)
+  (dependencies `())
+  (skip ())
+  (files (libraries
+           ((scheme-file "work-planer")
+            (directory "work-planer" ())))
+         (tests ((directory "tests" ())))
+         (programs ((directory "scripts" ())))
+         (documentation
+           ((org-file "README")
+            (symlink "README" "README.org")
+            (text-file "HACKING")
+            (text-file "COPYING")
+            (directory "doc" ((texi-file "work-planer")))))
+         (infrastructure
+           ((scheme-file "guix")
+            (text-file ".gitignore")
+            (scheme-file "hall")))))

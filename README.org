@@ -1,0 +1,5 @@
+# -*- mode: org; coding: utf-8; -*-
+
+#+TITLE: README for Work-Planer
+
+In development. I'll write this later. I promise.
