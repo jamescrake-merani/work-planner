@@ -17,13 +17,13 @@
 (define-module (work-planner date-helpers))
 (use-modules (srfi srfi-19))
 
-(define (same-day? date1 date2)
+(define-public (same-day? date1 date2)
   (and
    (= (date-day date1) (date-day date2))
    (= (date-month date1) (date-month date2))
    (= (date-year date1) (date-year date2))))
 
-(define (days-between-dates date1 date2)
+(define-public (days-between-dates date1 date2)
   (truncate
    (apply -
           (map date->julian-day (list date1 date2)))))
