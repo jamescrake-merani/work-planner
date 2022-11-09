@@ -23,8 +23,10 @@
 ;; function.
 
 ;; FIXME: Very long winded title. Can this be reduced?
-(define (filter-work-item-to-be-done-on-date item date)
-  (same-day? (work-item-date item) date))
+(define (make-filter-work-item-to-be-done-on-date date)
+  (lambda (item)
+    (same-day? (work-item-date item) date)))
 
-(define (filter-work-due-in-n-days item n)
-  (> (days-between-dates (work-item-due-date item) (current-date))))
+(define (make-filter-work-due-in-n-days n)
+  (lambda (item)
+    (> (days-between-dates (work-item-due-date item) (current-date)))))
