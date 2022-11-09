@@ -30,3 +30,6 @@
 (define (make-filter-work-due-in-n-days n)
   (lambda (item)
     (> (days-between-dates (work-item-due-date item) (current-date)))))
+
+(define (filter-work-overdue item)
+  (>= (days-between-dates (current-date) (work-item-due-date item)) 0))
