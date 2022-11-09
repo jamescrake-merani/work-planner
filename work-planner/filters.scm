@@ -16,7 +16,8 @@
 
 (define-module (work-planner filters))
 (use-modules (work-planner date-helpers)
-             (work-planner date-json))
+             (work-planner date-json)
+             (srfi srfi-19))
 
 ;; These functions are designed to be called with the filter
 ;; function.
@@ -24,3 +25,6 @@
 ;; FIXME: Very long winded title. Can this be reduced?
 (define (filter-work-item-to-be-done-on-date item date)
   (same-day? (work-item-date item) date))
+
+(define (filter-work-due-in-n-days item n)
+  (> (days-between-dates (work-item-due-date item) (current-date))))
