@@ -55,8 +55,8 @@
 ;; This is a list of dates, not just one single date. The user might
 ;; want to designated dates to work at a certain task without necessarily
 ;; finishing it in one day.
-(define-public (work-item-completed-on item) ;;TODO: Might rename this. Not decided yet.
-  (assoc-ref item "completed-on"))
+(define-public (work-item-designated-completion-dates item) ;;TODO: Might rename this. Not decided yet.
+  (assoc-ref item "designated-completion-dates"))
 
 ;; Expected to be false when not done, but when true it should be the
 ;; date on which the item was completed, not just #t
