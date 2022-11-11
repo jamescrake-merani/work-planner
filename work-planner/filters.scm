@@ -33,3 +33,6 @@
 
 (define-public (filter-work-overdue item)
   (>= (days-between-dates (current-date) (work-item-due-date item)) 0))
+
+(define-public (filter-no-to-be-done-date item)
+  (not (work-item-designated-completion-dates item)))
