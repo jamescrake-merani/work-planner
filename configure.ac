@@ -1,6 +1,6 @@
 dnl -*- Autoconf -*-
 
-AC_INIT(work-planer, 0.1)
+AC_INIT(work-planner, 0.1)
 AC_SUBST(HVERSION, "\"0.1\"")
 AC_SUBST(AUTHOR, "\"James Crake-Merani\"")
 AC_SUBST(COPYRIGHT, "'(2022)")

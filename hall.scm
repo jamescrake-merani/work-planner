@@ -1,5 +1,5 @@
 (hall-description
-  (name "work-planer")
+  (name "work-planner")
   (prefix "")
   (version "0.1")
   (author "James Crake-Merani")

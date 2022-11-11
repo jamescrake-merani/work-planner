@@ -12,9 +12,9 @@
   (gnu packages texinfo))
 
 (package
-  (name "work-planer")
+  (name "work-planner")
   (version "0.1")
-  (source (local-file "./work-planer-0.1.tar.gz"))
+  (source (local-file "./work-planner-0.1.tar.gz"))
   (build-system gnu-build-system)
   (arguments `())
   (native-inputs
