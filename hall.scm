@@ -11,8 +11,8 @@
   (dependencies `())
   (skip ())
   (files (libraries
-           ((scheme-file "work-planer")
-            (directory "work-planer" ())))
+           ((scheme-file "work-planner")
+            (directory "work-planner" ())))
          (tests ((directory "tests" ())))
          (programs ((directory "scripts" ())))
          (documentation
@@ -20,7 +20,7 @@
             (symlink "README" "README.org")
             (text-file "HACKING")
             (text-file "COPYING")
-            (directory "doc" ((texi-file "work-planer")))))
+            (directory "doc" ((texi-file "work-planner")))))
          (infrastructure
            ((scheme-file "guix")
             (text-file ".gitignore")

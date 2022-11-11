@@ -32,7 +32,7 @@ SUFFIXES = .scm .go
 .scm.go:
 	$(AM_V_GEN)$(top_builddir)/pre-inst-env $(GUILE_TOOLS) compile $(GUILE_WARNINGS) -o "$@" "$<"
 
-SOURCES = work-planer.scm
+SOURCES = work-planner.scm
 
 TESTS = 
 
@@ -50,7 +50,7 @@ AM_SCM_LOG_FLAGS = --no-auto-compile -L "$(top_srcdir)"
 
 AM_TESTS_ENVIRONMENT = abs_top_srcdir="$(abs_top_srcdir)"
 
-info_TEXINFOS = doc/work-planer.texi
+info_TEXINFOS = doc/work-planner.texi
 
 EXTRA_DIST += README.org \
               README \
