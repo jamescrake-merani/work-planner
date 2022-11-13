@@ -2,7 +2,6 @@
   (guix packages)
   ((guix licenses) #:prefix license:)
   (guix download)
-  (guix gexp)
   (guix build-system gnu)
   (gnu packages)
   (gnu packages autotools)
@@ -14,7 +13,7 @@
 (package
   (name "work-planner")
   (version "0.1")
-  (source (local-file "./work-planner-0.1.tar.gz"))
+  (source "./work-planner-0.1.tar.gz")
   (build-system gnu-build-system)
   (arguments `())
   (native-inputs
