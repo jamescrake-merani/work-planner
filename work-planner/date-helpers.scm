@@ -18,7 +18,9 @@
 (use-modules (srfi srfi-19))
 
 (define-public (same-day? date1 date2)
-  (and
+  (and ;; These first arguments are to make sure both dates aren't #f.
+   date1
+   date2
    (= (date-day date1) (date-day date2))
    (= (date-month date1) (date-month date2))
    (= (date-year date1) (date-year date2))))
