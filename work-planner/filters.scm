@@ -25,7 +25,7 @@
 ;; FIXME: Very long winded title. Can this be reduced?
 (define-public (make-filter-work-item-to-be-done-on-date date)
   (lambda (item)
-    (same-day? (work-item-date item) date)))
+    (same-day? (work-item-designated-completion-dates item) date)))
 
 (define* (make-filter-work-due-in-n-days n #:optional (from (current-date)))
   (lambda (item)
