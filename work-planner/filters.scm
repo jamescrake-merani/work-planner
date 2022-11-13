@@ -38,4 +38,4 @@
   (not (work-item-designated-completion-dates item)))
 
 (define-public (filter-no-due-date item)
-  (not (work-item-due-date) item))
+  (not (work-item-due-date item)))
