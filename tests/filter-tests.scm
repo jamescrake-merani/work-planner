@@ -23,19 +23,19 @@
 (test-begin "filter-tests")
 
 (test-equal
-    (filter (make-filter-work-item-to-be-done-on-date (make-date 0 0 0 15 20 11 2022 0)) test-items)
-  (list (list-ref test-items 0) (list-ref test-items 2)))
+    (list (list-ref test-items 0) (list-ref test-items 2))
+  (filter (make-filter-work-item-to-be-done-on-date (make-date 0 0 0 15 20 11 2022 0)) test-items))
 
 (test-equal
-    (filter (make-filter-work-due-in-n-days 5 (make-date 0 0 0 22 18 11 2022 0)) test-items)
-  (list (list-ref test-items 0) (list-ref test-items 1)))
+    (list (list-ref test-items 0) (list-ref test-items 1))
+  (filter (make-filter-work-due-in-n-days 5 (make-date 0 0 0 22 18 11 2022 0)) test-items))
 
 (test-equal
-    (filter (make-filter-work-overdue (make-date 0 0 0 22 23 11 2022 0)) test-items)
-  (list (list-ref test-items 0) (list-ref test-items 1)))
+    (list (list-ref test-items 0) (list-ref test-items 1))
+  (filter (make-filter-work-overdue (make-date 0 0 0 22 23 11 2022 0)) test-items))
 
 (test-equal ;;TODO: Should probably add another test-item for this
-    (filter filter-no-to-be-done-date test-items)
-  (list (list-ref test-items 1)))
+    (list (list-ref test-items 1))
+  (filter filter-no-to-be-done-date test-items))
 
 (test-end "filter-tests")
