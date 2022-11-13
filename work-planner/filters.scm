@@ -32,8 +32,9 @@
     (> (days-between-dates (work-item-due-date item) from))))
 (export make-filter-work-due-in-n-days)
 
-(define* (filter-work-overdue item #:optional (from (current-date)))
-  (>= (days-between-dates from (work-item-due-date item)) 0))
+(define* (make-filter-work-overdue item #:optional (from (current-date)))
+  (lambda (item)
+    (>= (days-between-dates from (work-item-due-date item)) 0)))
 (export filter-work-overdue)
 (define-public (filter-no-to-be-done-date item)
   (not (work-item-designated-completion-dates item)))
