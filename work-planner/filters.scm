@@ -27,13 +27,14 @@
   (lambda (item)
     (same-day? (work-item-date item) date)))
 
-(define-public (make-filter-work-due-in-n-days n)
+(define* (make-filter-work-due-in-n-days n #:optional (from (current-date)))
   (lambda (item)
-    (> (days-between-dates (work-item-due-date item) (current-date)))))
+    (> (days-between-dates (work-item-due-date item) from))))
+(export make-filter-work-due-in-n-days)
 
-(define-public (filter-work-overdue item)
-  (>= (days-between-dates (current-date) (work-item-due-date item)) 0))
-
+(define* (filter-work-overdue item #:optional (from (current-date)))
+  (>= (days-between-dates from (work-item-due-date item)) 0))
+(export filter-work-overdue)
 (define-public (filter-no-to-be-done-date item)
   (not (work-item-designated-completion-dates item)))
 
