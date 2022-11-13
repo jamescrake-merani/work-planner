@@ -17,12 +17,14 @@
               ((scheme-file "date-json")
                (scheme-file "filters")
                (scheme-file "date-helpers")))))
-         (tests ((directory "tests" ())))
+         (tests ((directory
+                   "tests"
+                   ((scheme-file "filter-tests")))))
          (programs ((directory "scripts" ())))
          (documentation
-           ((org-file "README")
-            (symlink "README" "README.org")
-            (text-file "COPYING")
+           ((text-file "ChangeLog")
+            (text-file "AUTHORS")
+            (text-file "NEWS")
             (directory
               "doc"
               ((texi-file "version")
@@ -30,10 +32,10 @@
                (texi-file "work-planner")
                (text-file "stamp-vti")
                (text-file ".dirstamp")))
-            (text-file "NEWS")
-            (text-file "AUTHORS")
-            (text-file "ChangeLog")))
+            (text-file "COPYING")
+            (symlink "README" "README.org")
+            (org-file "README")))
          (infrastructure
-           ((scheme-file "guix")
+           ((scheme-file "hall")
             (text-file ".gitignore")
-            (scheme-file "hall")))))
+            (scheme-file "guix")))))
