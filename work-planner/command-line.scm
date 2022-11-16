@@ -18,7 +18,8 @@
 (use-modules (work-planner date-json)
              (work-planner filters)
              (srfi srfi-19)
-             (srfi srfi-171))
+             (srfi srfi-171)
+             (ice-9 format))
 
 ;; This function is going to be extended a lot.
 (define* (work-item-string-representation item
@@ -48,8 +49,15 @@
              (filter (make-filter-work-item-to-be-done-on-date date) items))))
 (export construct-to-be-done-on-date)
 
+(define* (construct-due-in-n-days items #:optional (date (current-date)) (n 7))
+  (cons (format #f "Due in ~d days")
+        (map list-item-string-representation
+             (filter (make-filter-work-due-in-n-days n date) items))))
+(export construct-due-in-n-days)
+
 (define* (summary-screen items #:optional (date (current-date)))
   (let ((lines
-         (list (construct-to-be-done-on-date items date))))
+         (list (construct-to-be-done-on-date items date)
+               (construct-due-in-n-days items date))))
     (string-append (string-join (list-transduce tflatten rcons lines) "\n") "\n")))
 (export summary-screen)
