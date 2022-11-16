@@ -37,8 +37,8 @@
 ;; printed onto the screen
 (define* (construct-to-be-done-on-date items #:optional (date (current-date)))
   (cons "To be done today:"
-        (map (filter (make-filter-work-item-to-be-done-on-date date) items)
-             work-item-string-representation)))
+        (map work-item-string-representation
+             (filter (make-filter-work-item-to-be-done-on-date date) items))))
 (export construct-to-be-done-on-date)
 
 (define* (summary-screen items #:optional (date (current-date)))
