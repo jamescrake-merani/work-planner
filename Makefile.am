@@ -1,4 +1,4 @@
-bin_SCRIPTS = 
+bin_SCRIPTS = scripts/work-planner
 
 # Handle substitution of fully-expanded Autoconf variables.
 do_subst = $(SED)					\
@@ -34,7 +34,8 @@ SUFFIXES = .scm .go
 
 SOURCES = work-planner/date-json.scm \
           work-planner/filters.scm \
-          work-planner/date-helpers.scm
+          work-planner/date-helpers.scm \
+          work-planner/command-line.scm
 
 TESTS = tests/filter-tests.scm
 
