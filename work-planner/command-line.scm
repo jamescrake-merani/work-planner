@@ -44,5 +44,5 @@
 (define* (summary-screen items #:optional (date (current-date)))
   (let ((lines
          (list (construct-to-be-done-on-date items date))))
-    (string-join (list-transduce tflatten rcons lines) "\n")))
+    (string-append (string-join (list-transduce tflatten rcons lines) "\n") "\n")))
 (export summary-screen)
