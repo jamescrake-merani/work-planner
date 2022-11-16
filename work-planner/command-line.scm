@@ -17,7 +17,8 @@
 (define-module (work-planner command-line))
 (use-modules (work-planner date-json)
              (work-planner filters)
-             (srfi srfi-19))
+             (srfi srfi-19)
+             (srfi srfi-171))
 
 ;; This function is going to be extended a lot.
 (define* (work-item-string-representation item
@@ -39,3 +40,9 @@
         (map (filter (make-filter-work-item-to-be-done-on-date date) items)
              work-item-string-representation)))
 (export construct-to-be-done-on-date)
+
+(define* (summary-screen items #:optional (date (current-date)))
+  (let ((lines
+         (list (construct-to-be-done-on-date items date))))
+    (string-join (list-transduce tflatten rcons lines) "\n")))
+(export summary-screen)
