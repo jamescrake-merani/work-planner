@@ -50,7 +50,7 @@
 (export construct-to-be-done-on-date)
 
 (define* (construct-due-in-n-days items #:optional (date (current-date)) (n 7))
-  (cons (format #f "Due in ~d days")
+  (cons (format #f "Due in ~d days" n)
         (map list-item-string-representation
              (filter (make-filter-work-due-in-n-days n date) items))))
 (export construct-due-in-n-days)
