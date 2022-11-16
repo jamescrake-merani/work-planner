@@ -16,6 +16,7 @@
 
 (define-module (work-planner command-line))
 (use-modules (work-planner date-json)
+             (work-planner filters)
              (srfi srfi-19))
 
 ;; This function is going to be extended a lot.
@@ -30,3 +31,11 @@
              "")))
     (string-append date-str (work-item-text item))))
 (export work-item-string-representation)
+
+;; The following functions return a list of lines that are expected to be
+;; printed onto the screen
+(define* (construct-to-be-done-on-date items #:optional (date (current-date)))
+  (cons "To be done today:"
+        (map (filter (make-filter-work-item-to-be-done-on-date date) items)
+             work-item-string-representation)))
+(export construct-to-be-done-on-date)
