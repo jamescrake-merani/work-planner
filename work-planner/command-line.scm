@@ -38,7 +38,10 @@
                                           #:key show-due-date
                                           (date-format "~d/~m/~y ~T"))
   "Represents each work item as a list item (with a '-' before it)"
-  (string-append "- " (work-item-string-representation item)))
+  (string-append "- " (work-item-string-representation
+                       item
+                       #:show-due-date show-due-date
+                       #:date-format date-format)))
 (export list-item-string-representation )
 
 ;; The following functions return a list of lines that are expected to be
