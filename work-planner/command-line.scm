@@ -33,11 +33,18 @@
     (string-append date-str (work-item-text item))))
 (export work-item-string-representation)
 
+(define* (list-item-string-representation item
+                                          #:key show-due-date
+                                          (date-format "~d/~m/~y ~T"))
+  "Represents each work item as a list item (with a '-' before it)"
+  (string-append "- " (work-item-string-representation item)))
+(export list-item-string-representation )
+
 ;; The following functions return a list of lines that are expected to be
 ;; printed onto the screen
 (define* (construct-to-be-done-on-date items #:optional (date (current-date)))
   (cons "To be done today:"
-        (map work-item-string-representation
+        (map list-item-string-representation
              (filter (make-filter-work-item-to-be-done-on-date date) items))))
 (export construct-to-be-done-on-date)
 
