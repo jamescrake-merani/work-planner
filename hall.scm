@@ -21,7 +21,9 @@
          (tests ((directory
                    "tests"
                    ((scheme-file "filter-tests")))))
-         (programs ((directory "scripts" ())))
+         (programs ((directory
+                     "scripts"
+                     ((in-file "work-planner")))))
          (documentation
            ((text-file "ChangeLog")
             (text-file "AUTHORS")
