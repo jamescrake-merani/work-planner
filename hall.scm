@@ -16,7 +16,8 @@
               "work-planner"
               ((scheme-file "date-json")
                (scheme-file "filters")
-               (scheme-file "date-helpers")))))
+               (scheme-file "date-helpers")
+               (scheme-file "command-line")))))
          (tests ((directory
                    "tests"
                    ((scheme-file "filter-tests")))))
