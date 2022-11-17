@@ -32,7 +32,7 @@
               ": ")
              ""))
         (completion-str
-         (if (work-item-complete item)
+         (if (work-item-completed? item)
              "COMPLETED: "
              "")))
     (format #f "~a~a[~d]~a" date-str completion-str (work-item-id item) (work-item-text item))))
