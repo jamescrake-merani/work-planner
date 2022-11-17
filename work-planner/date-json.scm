@@ -41,7 +41,7 @@
    (cons "day" (date-day date)) ;; I don't know why these have different names.
    (cons "month" (date-month date))
    (cons "year" (date-year date))
-   (cons "zone-offeset" (date-zone-offset date))))
+   (cons "zone-offset" (date-zone-offset date))))
 
 ;; TODO: Right know designated completion dates is being used like a single
 ;; value but I think its meant to be a list
