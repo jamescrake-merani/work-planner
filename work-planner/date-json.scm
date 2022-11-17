@@ -57,13 +57,13 @@
           (alist-delete "due-date" (alist-delete "designated-completion-dates" item))))
 
 (define-public (json-string->work-item str)
-  (work-item-fix-date (json-string->scm str)))
+  (work-item-fix-date (vector->list (json-string->scm str))))
 
 (define-public (work-item->json-string item)
   (scm->json-string (work-item-dates-assoc item)))
 
 (define-public (json-string->work-items str)
-  (map work-item-fix-date (json-string->scm str)))
+  (map work-item-fix-date (vector->list (json-string->scm str))))
 
 (define-public (work-items->json-string items)
   (scm->json-string (map work-item-dates-assoc items)))
