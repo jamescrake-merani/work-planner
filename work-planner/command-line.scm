@@ -30,8 +30,12 @@
              (string-append
               (date->string (work-item-due-date item) date-format)
               ": ")
+             ""))
+        (completion-str
+         (if (work-item-completed item)
+             "COMPLETED: "
              "")))
-    (format #f "~a[~d]~a" date-str (work-item-id item) (work-item-text item))))
+    (format #f "~a~a[~d]~a" date-str completion-str (work-item-id item) (work-item-text item))))
 (export work-item-string-representation)
 
 (define* (list-item-string-representation item
