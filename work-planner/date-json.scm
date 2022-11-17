@@ -98,4 +98,4 @@
 (define-public (work-item-replace old-item new-item items)
   (cons new-item
         (filter (lambda (i)
-                  (not (= (work-item-id old-item) ((work-item-id new-item))))) items)))
+                  (not (= (work-item-id old-item) (work-item-id new-item)))) items)))
