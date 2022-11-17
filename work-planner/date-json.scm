@@ -55,6 +55,18 @@
                 (cons "designated-completion-dates" (date->a-list (assoc-ref item "designated-completion-dates"))))
           (alist-delete "due-date" (alist-delete "designated-completion-dates" item))))
 
+(define-public (json-string->work-item str)
+  (work-item-fix-date (json-string->scm str)))
+
+(define-public (work-item->json-string item)
+  (scm->json-string (work-item-dates-assoc item)))
+
+(define-public (json-string->work-items str)
+  (map work-item-fix-date (json-string->scm str)))
+
+(define-public (work-items->json-string items)
+  (scm->json-string (map work-item-dates-assoc items)))
+
 ;; A work item does not have to have all these fields - the caller
 ;; can expect a #f value if the field doesn't exist. However, callers
 ;; may assume certain fields exist, and will of course error when they
