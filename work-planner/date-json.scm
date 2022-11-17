@@ -48,7 +48,7 @@
 (define-public (work-item-fix-date item)
   (append (list (cons "due-date" (a-list->date (assoc-ref item "due-date")))
                 (cons "designated-completion-dates" (a-list->date (assoc-ref item "designated-completion-dates")))
-                (cons "completed" (a-list->date (assoc-ref item "completed"))))
+                (cons "completed" (if (assoc-ref item "completed") (a-list->date (assoc-ref item "completed")) #f)))
           (alist-delete "due-date" (alist-delete "designated-completion-dates" item))))
 ;; TODO: These two functions are so similar that they can probably be combined
 ;; into one.
