@@ -21,11 +21,13 @@
 ;;FIXME: Assumes that this dir already exists.
 (define items-dir "/home/jamescrake-merani/.local/share/work-planner/items.json")
 (use-modules (work-planner command-line)
+             (work-planner date-json)
              (ice-9 textual-ports))
 
 ;; FIXME: There is no error handling here.
 (define (main args) ;;TEMPORARY - right now we just get the summary screen.
   (let* ((items-port (open items-dir O_RDONLY))
-         (items (json-string->scm (get-string-all items-port))))
+         (items-assoc (json-string->scm (get-string-all items-port)))
+         (items (map work-item-fix-date items-assoc)))
     (display (summary-screen items))
     (close items-port)))
