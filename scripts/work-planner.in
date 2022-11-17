@@ -43,7 +43,7 @@
              (items (json-string->work-items items-json)))
         (close items-port)
         (if (not (or to-complete))
-            (display (summary-screen items)) ;;TODO: Unfinished. Result needs to be saved.
+            (display (summary-screen items))
             (cond ((to-complete) (let ((item-to-complete (find (lambda (i) (= (assoc-ref i "id") to-complete)) items)))
                                   (save-items!
                                    (work-item-replace item-to-complete (work-item-complete item-to-complete) items))))))))))
