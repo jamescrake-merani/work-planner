@@ -27,6 +27,11 @@
              (srfi srfi-1)
              )
 
+(define (save-items! items)
+  (let ((port (open items-dir O_WRONLY)))
+    (put-string port (work-items->json-string items))
+    (close port)))
+
 ;; FIXME: There is no error handling here.
 (define (main args)
   (let* ((option-spec '((complete (value #t)
