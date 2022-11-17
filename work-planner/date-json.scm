@@ -92,3 +92,6 @@
 ;; date on which the item was completed, not just #t
 (define-public (work-item-date item)
   (assoc-ref item "done"))
+
+(define-public (work-item-complete item)
+  (cons (cons "completed" (current-date)) (alist-delete "completed" item)))
