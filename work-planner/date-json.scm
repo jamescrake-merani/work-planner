@@ -88,10 +88,8 @@
 (define-public (work-item-designated-completion-dates item) ;;TODO: Might rename this. Not decided yet.
   (assoc-ref item "designated-completion-dates"))
 
-;; Expected to be false when not done, but when true it should be the
-;; date on which the item was completed, not just #t
-(define-public (work-item-date item)
-  (assoc-ref item "done"))
+(define-public (work-item-completed? item)
+  (assoc-ref item "completed"))
 
 (define-public (work-item-complete item)
   (cons (cons "completed" (current-date)) (alist-delete "completed" item)))

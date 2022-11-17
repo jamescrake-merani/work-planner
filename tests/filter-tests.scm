@@ -9,19 +9,19 @@
     (cons "text" "Placeholder value 1")
     (cons "due-date" (make-date 0 0 0 10 22 11 2022 0))
     (cons "designated-completion-dates" (make-date 0 0 0 15 20 11 2022 0))
-    (cons "done" #f))
+    (cons "completed" #f))
    (list
     (cons "id" 2)
     (cons "text" "Placeholder value 2")
     (cons "due-date" (make-date 0 0 0 22 19 11 2022 0))
     ;; No designated completion date
-    (cons "done" #f))
+    (cons "completed" #f))
    (list
     (cons "id" 3)
     (cons "text" "Placeholder value 3")
     (cons "due-date" (make-date 0 0 0 6 29 11 2022 0))
     (cons "designated-completion-dates" (make-date 0 0 0 13 20 11 2022 0))
-    (cons "done" #f))))
+    (cons "completed" #f))))
 
 (test-begin "filter-tests")
 
