@@ -16,7 +16,8 @@
 
 (define-module (work-planner date-json))
 (use-modules (srfi srfi-19)
-             (srfi srfi-1))
+             (srfi srfi-1)
+             (json))
 ;; The purpose of this module is to be able to serialise, and
 ;; deserialise dates from the SRFI-19 module to, and from JSON.
 
