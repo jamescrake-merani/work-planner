@@ -22,12 +22,22 @@
 (define items-dir "/home/jamescrake-merani/.local/share/work-planner/items.json")
 (use-modules (work-planner command-line)
              (work-planner date-json)
-             (ice-9 textual-ports))
+             (ice-9 textual-ports)
+             (ice-9 getopt-long)
+             (srfi srfi-1)
+             )
 
 ;; FIXME: There is no error handling here.
 (define (main args) ;;TEMPORARY - right now we just get the summary screen.
-  (let* ((items-port (open items-dir O_RDONLY))
-         (items-json (get-string-all items-port))
-         (items (json-string->work-items items-json)))
-    (display (summary-screen items))
-    (close items-port)))
+  (let* ((option-spec '((complete (value #t)
+                                 (single-char #\c))))
+         (options (getopt-long args option-spec)))
+    (let ((to-complete (option-ref options 'complete #f)))
+      (let* ((items-port (open items-dir O_RDONLY))
+             (items-json (get-string-all items-port))
+             (items (json-string->work-items items-json)))
+        (if (not (or to-complete))
+            (display (summary-screen items)) ;;TODO: Unfinished. Result needs to be saved.
+            (cond (to-complete) (work-item-complete
+                                 (find (lambda (i) (= (assoc-ref i "id") to-complete)) items))))
+        (close items-port)))))
