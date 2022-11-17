@@ -27,7 +27,7 @@
 ;; FIXME: There is no error handling here.
 (define (main args) ;;TEMPORARY - right now we just get the summary screen.
   (let* ((items-port (open items-dir O_RDONLY))
-         (items-assoc (json-string->scm (get-string-all items-port)))
-         (items (map work-item-fix-date items-assoc)))
+         (items-json (get-string-all items-port))
+         (items (json-string->work-items items-json)))
     (display (summary-screen items))
     (close items-port)))
