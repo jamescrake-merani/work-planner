@@ -15,7 +15,8 @@
 ;;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 (define-module (work-planner date-json))
-(use-modules (srfi srfi-19))
+(use-modules (srfi srfi-19)
+             (srfi srfi-1))
 ;; The purpose of this module is to be able to serialise, and
 ;; deserialise dates from the SRFI-19 module to, and from JSON.
 
@@ -40,6 +41,13 @@
    (cons "month" (date-month date))
    (cons "year" (date-year date))
    (cons "zone-offeset" (date-zone-offset date))))
+
+;; TODO: Right know designated completion dates is being used like a single
+;; value but I think its meant to be a list
+(define-public (work-item-fix-date item)
+  (cons (cons "due-date" (a-list->date (assoc-ref item "due-date")))
+        (cons "designated-completion-dates" (a-list->date (assoc-ref item "designated-completion-dates")))
+        (alist-delete "due-date" (alist-delete "designated-completion-dates" item))))
 
 ;; A work item does not have to have all these fields - the caller
 ;; can expect a #f value if the field doesn't exist. However, callers
