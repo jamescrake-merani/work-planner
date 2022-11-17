@@ -73,6 +73,9 @@
 ;; may assume certain fields exist, and will of course error when they
 ;; don't.
 
+(define-public (work-item-id item)
+  (assoc-ref item "id"))
+
 (define-public (work-item-text item)
   (assoc-ref item "text"))
 
