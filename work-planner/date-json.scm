@@ -47,13 +47,15 @@
 ;; value but I think its meant to be a list
 (define-public (work-item-fix-date item)
   (append (list (cons "due-date" (a-list->date (assoc-ref item "due-date")))
-                (cons "designated-completion-dates" (a-list->date (assoc-ref item "designated-completion-dates"))))
+                (cons "designated-completion-dates" (a-list->date (assoc-ref item "designated-completion-dates")))
+                (cons "completed" (a-lst->date (assoc-ref item "completed"))))
           (alist-delete "due-date" (alist-delete "designated-completion-dates" item))))
 ;; TODO: These two functions are so similar that they can probably be combined
 ;; into one.
 (define-public (work-item-dates-assoc item)
   (append (list (cons "due-date" (date->a-list (assoc-ref item "due-date")))
-                (cons "designated-completion-dates" (date->a-list (assoc-ref item "designated-completion-dates"))))
+                (cons "designated-completion-dates" (date->a-list (assoc-ref item "designated-completion-dates")))
+                (cons "completed" (date->a-list (assoc-ref item "completed"))))
           (alist-delete "due-date" (alist-delete "designated-completion-dates" item))))
 
 (define-public (json-string->work-item str)
