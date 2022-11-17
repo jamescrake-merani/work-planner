@@ -28,7 +28,7 @@
              )
 
 ;; FIXME: There is no error handling here.
-(define (main args) ;;TEMPORARY - right now we just get the summary screen.
+(define (main args)
   (let* ((option-spec '((complete (value #t)
                                  (single-char #\c))))
          (options (getopt-long args option-spec)))
