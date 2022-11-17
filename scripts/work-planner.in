@@ -36,8 +36,8 @@
       (let* ((items-port (open items-dir O_RDONLY))
              (items-json (get-string-all items-port))
              (items (json-string->work-items items-json)))
+        (close items-port)
         (if (not (or to-complete))
             (display (summary-screen items)) ;;TODO: Unfinished. Result needs to be saved.
             (cond (to-complete) (work-item-complete
-                                 (find (lambda (i) (= (assoc-ref i "id") to-complete)) items))))
-        (close items-port)))))
+                                 (find (lambda (i) (= (assoc-ref i "id") to-complete)) items))))))))
