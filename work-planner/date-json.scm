@@ -48,6 +48,12 @@
   (list (cons "due-date" (a-list->date (assoc-ref item "due-date")))
         (cons "designated-completion-dates" (a-list->date (assoc-ref item "designated-completion-dates")))
         (alist-delete "due-date" (alist-delete "designated-completion-dates" item))))
+;; TODO: These two functions are so similar that they can probably be combined
+;; into one.
+(define-public (work-item-dates-assoc item)
+  (list (cons "due-date" (date->a-list (assoc-ref item "due-date")))
+        (cons "designated-completion-dates" (date->a-list (assoc-ref item "designated-completion-dates")))
+        (alist-delete "due-date" (alist-delete "designated-completion-dates" item))))
 
 ;; A work item does not have to have all these fields - the caller
 ;; can expect a #f value if the field doesn't exist. However, callers
