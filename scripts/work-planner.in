@@ -46,5 +46,5 @@
             (display (summary-screen items))
             (cond (to-complete (let* ((to-complete-int (string->number to-complete))
                                         (item-to-complete (find (lambda (i) (= (assoc-ref i "id") to-complete-int)) items)))
-                                  (save-items!
-                                   (work-item-replace item-to-complete (work-item-complete item-to-complete) items))))))))))
+                                 (save-items!
+                                  (work-item-replace item-to-complete (work-item-complete item-to-complete) items))))))))))
