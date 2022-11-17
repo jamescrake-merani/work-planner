@@ -45,7 +45,7 @@
 ;; TODO: Right know designated completion dates is being used like a single
 ;; value but I think its meant to be a list
 (define-public (work-item-fix-date item)
-  (cons (cons "due-date" (a-list->date (assoc-ref item "due-date")))
+  (list (cons "due-date" (a-list->date (assoc-ref item "due-date")))
         (cons "designated-completion-dates" (a-list->date (assoc-ref item "designated-completion-dates")))
         (alist-delete "due-date" (alist-delete "designated-completion-dates" item))))
 
