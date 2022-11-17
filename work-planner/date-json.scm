@@ -66,7 +66,7 @@
   (map work-item-fix-date (vector->list (json-string->scm str))))
 
 (define-public (work-items->json-string items)
-  (scm->json-string (map work-item-dates-assoc items)))
+  (scm->json-string (list->vector (map work-item-dates-assoc items))))
 
 ;; A work item does not have to have all these fields - the caller
 ;; can expect a #f value if the field doesn't exist. However, callers
