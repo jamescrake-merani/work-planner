@@ -44,5 +44,6 @@
         (close items-port)
         (if (not (or to-complete))
             (display (summary-screen items)) ;;TODO: Unfinished. Result needs to be saved.
-            (cond (to-complete) (work-item-complete
-                                 (find (lambda (i) (= (assoc-ref i "id") to-complete)) items))))))))
+            (cond ((to-complete) (let ((item-to-complete (find (lambda (i) (= (assoc-ref i "id") to-complete)) items)))
+                                  (save-items!
+                                   (work-item-replace item-to-complete (work-item-complete item-to-complete) items))))))))))
