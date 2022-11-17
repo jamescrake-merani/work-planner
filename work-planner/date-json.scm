@@ -56,7 +56,7 @@
   (append (list (cons "due-date" (date->a-list (assoc-ref item "due-date")))
                 (cons "designated-completion-dates" (date->a-list (assoc-ref item "designated-completion-dates")))
                 (cons "completed" (date->a-list (assoc-ref item "completed"))))
-          (alist-delete "due-date" (alist-delete "designated-completion-dates" item))))
+          (alist-delete "completed" (alist-delete "due-date" (alist-delete "designated-completion-dates" item)))))
 
 (define-public (json-string->work-item str)
   (work-item-fix-date (vector->list (json-string->scm str))))
