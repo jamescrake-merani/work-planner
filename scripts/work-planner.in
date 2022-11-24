@@ -29,6 +29,7 @@
 
 (define (save-items! items)
   (let ((port (open items-dir O_WRONLY)))
+    (truncate-file port 0)
     (put-string port (work-items->json-string items))
     (close port)))
 
