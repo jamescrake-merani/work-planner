@@ -25,7 +25,7 @@
              (ice-9 textual-ports)
              (ice-9 getopt-long)
              (srfi srfi-1)
-             )
+             (srfi srfi-19))
 
 (define (save-items! items)
   (let ((port (open items-dir O_WRONLY)))
@@ -36,16 +36,28 @@
 ;; FIXME: There is no error handling here.
 (define (main args)
   (let* ((option-spec '((complete (value #t)
-                                  (single-char #\c))))
+                                  (single-char #\c))
+                        (add (single-char #\a))
+                        (text (value #t)
+                              (single-char #\t))
+                        (due (value #t)
+                             (single-char #\d)))) ;;TODO: add more options.
          (options (getopt-long args option-spec)))
-    (let ((to-complete (option-ref options 'complete #f)))
+    (let ((to-complete (option-ref options 'complete #f))
+          (to-add (option-ref options 'add #f)))
       (let* ((items-port (open items-dir O_RDONLY))
              (items-json (get-string-all items-port))
              (items (json-string->work-items items-json)))
         (close items-port)
-        (if (not (or to-complete))
+        (if (not (or to-complete to-add))
             (display (summary-screen items))
             (cond (to-complete (let* ((to-complete-int (string->number to-complete))
                                         (item-to-complete (find (lambda (i) (= (assoc-ref i "id") to-complete-int)) items)))
                                  (save-items!
-                                  (work-item-replace item-to-complete (work-item-complete item-to-complete) items))))))))))
+                                  (work-item-replace item-to-complete (work-item-complete item-to-complete) items))))
+                  (to-add (let* ((item-text (option-ref options 'text #f))
+                                 (due-str (option-ref options 'due #f)))
+                            (save-items!
+                             (add-work-item-to-lst
+                              (work-item #:text item-text
+                                         #:due (string->date due-str "~d/~m/~Y")))))))))))) ;;TODO: Make a much better parser for dates.
