@@ -60,4 +60,5 @@
                             (save-items!
                              (add-work-item-to-lst
                               (work-item #:text item-text
-                                         #:due-date (if due-str (string->date due-str "~d/~m/~Y") #f)))))))))))) ;;TODO: Make a much better parser for dates.
+                                         #:due-date (if due-str (string->date due-str "~d/~m/~Y") #f))
+                              items)))))))))) ;;TODO: Make a much better parser for dates.
