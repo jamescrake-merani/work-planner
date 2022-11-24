@@ -94,7 +94,8 @@
   (assoc-ref item "completed"))
 
 (define-public (work-item-complete item)
-  (cons (cons "completed" (current-date)) (alist-delete "completed" item)))
+  (let ((new-value (if (assoc-ref item "completed") #f (current-date))))
+    (cons (cons "completed" new-value) (alist-delete "completed" item))))
 
 ;; NOTE: Selection is based on id therefore id must be unique!
 (define-public (work-item-replace old-item new-item items)
