@@ -28,9 +28,10 @@
              (srfi srfi-19))
 
 (define (save-items! items)
-  (let ((port (open items-dir O_WRONLY)))
+  (let ((items-json (work-items->json-string items))
+        (port (open items-dir O_WRONLY)))
     (truncate-file port 0)
-    (put-string port (work-items->json-string items))
+    (put-string port items-json)
     (close port)))
 
 ;; FIXME: There is no error handling here.
