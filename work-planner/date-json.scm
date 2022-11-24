@@ -33,15 +33,17 @@
    (assoc-ref a-lst "zone-offset")))
 
 (define-public (date->a-list date)
-  (list
-   (cons "nsecs" (date-nanosecond date))
-   (cons "seconds" (date-second date))
-   (cons "minutes" (date-minute date))
-   (cons "hours" (date-hour date))
-   (cons "day" (date-day date)) ;; I don't know why these have different names.
-   (cons "month" (date-month date))
-   (cons "year" (date-year date))
-   (cons "zone-offset" (date-zone-offset date))))
+  (if date
+      (list
+       (cons "nsecs" (date-nanosecond date))
+       (cons "seconds" (date-second date))
+       (cons "minutes" (date-minute date))
+       (cons "hours" (date-hour date))
+       (cons "day" (date-day date)) ;; I don't know why these have different names.
+       (cons "month" (date-month date))
+       (cons "year" (date-year date))
+       (cons "zone-offset" (date-zone-offset date)))
+      #f))
 
 ;; TODO: Right know designated completion dates is being used like a single
 ;; value but I think its meant to be a list
