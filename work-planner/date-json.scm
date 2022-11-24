@@ -57,7 +57,7 @@
   "Fills in the id to the first one available"
   (if (any (lambda (item) (= (work-item-id item) id)) items-lst)
       (add-work-item-to-lst item items-lst (1+ id))
-      (let ((to-add (cons (cons "id" id) (alist-delete "id" items-lst))))
+      (let ((to-add (cons (cons "id" id) (alist-delete "id" item))))
         (cons to-add items-lst))))
 (export add-work-item-to-lst)
 ;; TODO: Right know designated completion dates is being used like a single
