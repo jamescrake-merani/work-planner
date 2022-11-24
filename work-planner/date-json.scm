@@ -56,7 +56,7 @@
 (define* (add-work-item-to-lst item items-lst #:optional (id 1))
   "Fills in the id to the first one available"
   (if (any (lambda (item) (= (work-item-id item) id)) items-lst)
-      (add-work-item-to-lst item (1+ id))
+      (add-work-item-to-lst item items-lst (1+ id))
       (let ((to-add (cons (cons "id" id) (alist-delete "id" items-lst))))
         (cons to-add items-lst))))
 (export add-work-item-to-lst)
