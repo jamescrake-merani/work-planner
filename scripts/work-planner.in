@@ -36,7 +36,7 @@
 ;; FIXME: There is no error handling here.
 (define (main args)
   (let* ((option-spec '((complete (value #t)
-                                 (single-char #\c))))
+                                  (single-char #\c))))
          (options (getopt-long args option-spec)))
     (let ((to-complete (option-ref options 'complete #f)))
       (let* ((items-port (open items-dir O_RDONLY))
