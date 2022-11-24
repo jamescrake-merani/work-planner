@@ -45,6 +45,13 @@
        (cons "zone-offset" (date-zone-offset date)))
       #f))
 
+(define* (work-item #:keys id text due-date designated-completion-dates completed)
+  (list
+   (cons "id" id)
+   (cons "text" text)
+   (cons "due-date" due-date)
+   (cons "designated-completion-dates" designated-completion-dates)))
+(export work-item)
 ;; TODO: Right know designated completion dates is being used like a single
 ;; value but I think its meant to be a list
 (define-public (work-item-fix-date item)
