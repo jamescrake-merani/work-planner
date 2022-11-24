@@ -52,6 +52,14 @@
    (cons "due-date" due-date)
    (cons "designated-completion-dates" designated-completion-dates)))
 (export work-item)
+
+(define* (add-work-item-to-lst item items-lst #:optional (id 1))
+  "Fills in the id to the first one available"
+  (if (any (lambda (item) (= (work-item-id item) id)))
+      (add-work-item-to-lst item (1+ id))
+      (let ((to-add (cons (cons "id" id) (alist-delete "id"))))
+        (cons to-add items-lst))))
+(export add-work-item-to-lst)
 ;; TODO: Right know designated completion dates is being used like a single
 ;; value but I think its meant to be a list
 (define-public (work-item-fix-date item)
