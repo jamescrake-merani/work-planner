@@ -29,7 +29,10 @@
 
 (define* (make-filter-work-due-in-n-days n #:optional (from (current-date)))
   (lambda (item)
-    (<= (days-between-dates (work-item-due-date item) from) n)))
+    (let ((days-between (days-between-dates (work-item-due-date item) from)))
+      (and ()
+           (> days-between 0)
+           (<= days-between n)))))
 (export make-filter-work-due-in-n-days)
 
 (define* (make-filter-work-overdue #:optional (from (current-date)))
