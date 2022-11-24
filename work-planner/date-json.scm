@@ -22,15 +22,17 @@
 ;; deserialise dates from the SRFI-19 module to, and from JSON.
 
 (define-public (a-list->date a-lst)
-  (make-date
-   (assoc-ref a-lst "nsecs")
-   (assoc-ref a-lst "seconds")
-   (assoc-ref a-lst "minutes")
-   (assoc-ref a-lst "hours")
-   (assoc-ref a-lst "day")
-   (assoc-ref a-lst "month")
-   (assoc-ref a-lst "year")
-   (assoc-ref a-lst "zone-offset")))
+  (if a-lst
+      (make-date
+       (assoc-ref a-lst "nsecs")
+       (assoc-ref a-lst "seconds")
+       (assoc-ref a-lst "minutes")
+       (assoc-ref a-lst "hours")
+       (assoc-ref a-lst "day")
+       (assoc-ref a-lst "month")
+       (assoc-ref a-lst "year")
+       (assoc-ref a-lst "zone-offset"))
+      #f))
 
 (define-public (date->a-list date)
   (if date
