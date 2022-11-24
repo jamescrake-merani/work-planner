@@ -45,7 +45,7 @@
        (cons "zone-offset" (date-zone-offset date)))
       #f))
 
-(define* (work-item #:keys id text due-date designated-completion-dates completed)
+(define* (work-item #:key id text due-date designated-completion-dates completed)
   (list
    (cons "id" id)
    (cons "text" text)
