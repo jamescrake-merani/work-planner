@@ -19,12 +19,15 @@
              (work-planner filters)
              (srfi srfi-19)
              (srfi srfi-171)
-             (ice-9 format))
+             (ice-9 format)
+             (ice-9 readline))
+
+(define date-template "~d/~m/~y ~T")
 
 ;; This function is going to be extended a lot.
 (define* (work-item-string-representation item
                                           #:key show-due-date
-                                          (date-format "~d/~m/~y ~T"))
+                                          (date-format date-template))
   (let ((date-str
          (if show-due-date
              (string-append
@@ -68,3 +71,27 @@
                (construct-due-in-n-days items date))))
     (string-append (string-join (list-transduce tflatten rcons lines) "\n") "\n")))
 (export summary-screen)
+
+(define (prompt-text)
+  (let ((proposed-text (readline "Please enter the text for the work item: ")))
+    (if (= (string-length proposed-text) 0)
+        (begin
+          (display "You cannot enter an empty string.")
+          (newline)
+          (prompt-text))
+        proposed-text)))
+
+(define (prompt-due-date) ;;TODO: Inform the user of what the right format is.
+  (let ((user-input (readline "Please enter a date in the appropriate format: ")))
+    (catch #t
+      (lambda ()
+        (string->date user-input date-template))
+      (lambda () ;;TODO: Perhaps be more specific about what the error is.
+        (display "Incorrect date format")
+        (newline)
+        (prompt-due-date)))))
+
+(define (interactive-create-work-item)
+  (work-item
+   #:text (prompt-text)
+   #:due-date (prompt-due-date)))
