@@ -62,7 +62,7 @@
       (let ((to-add (cons (cons "id" id) (alist-delete "id" item))))
         (cons to-add items-lst))))
 (export add-work-item-to-lst)
-;; TODO: Right know designated completion dates is being used like a single
+;; TODO: Right now designated completion dates is being used like a single
 ;; value but I think its meant to be a list
 (define-public (work-item-fix-date item)
   (append (list (cons "due-date" (a-list->date (assoc-ref item "due-date")))
