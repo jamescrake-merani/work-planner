@@ -124,3 +124,6 @@
 
 (define-public (designate-work-item-date item date)
   (cons (cons "designated-completion-dates" date) (alist-delete "designated-completion-dates" item)))
+
+(define-public (get-work-item items id)
+  (find (lambda (item) (= (work-item-id item) id)) items))
