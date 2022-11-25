@@ -26,6 +26,5 @@
    (= (date-year date1) (date-year date2))))
 
 (define-public (days-between-dates date1 date2)
-  (truncate
-   (apply -
-          (map date->julian-day (list date1 date2)))))
+  (apply -
+          (map date->julian-day (list date1 date2))))
