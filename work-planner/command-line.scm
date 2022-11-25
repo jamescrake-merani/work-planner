@@ -67,7 +67,7 @@
 
 (define* (construct-all-items items) ;;TODO: Show due if available.
   (cons "All work items: "
-        (map list-item-string-representation
+        (map (lambda (i) (list-item-string-representation i #:show-due-date #t))
              (sort items (lambda (y x) (< (work-item-id y) (work-item-id x)))))))
 (export construct-all-items)
 
