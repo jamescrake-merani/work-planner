@@ -91,7 +91,7 @@
         (newline)
         (prompt-due-date)))))
 
-(define (interactive-create-work-item)
+(define-public (interactive-create-work-item)
   (work-item
    #:text (prompt-text)
    #:due-date (prompt-due-date)))
