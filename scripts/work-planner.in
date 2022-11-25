@@ -42,7 +42,8 @@
                         (text (value #t)
                               (single-char #\t))
                         (due (value #t)
-                             (single-char #\d)))) ;;TODO: add more options.
+                             (single-char #\d))
+                        (interactive (single-char #\i)))) ;;TODO: add more options.
          (options (getopt-long args option-spec)))
     (let ((to-complete (option-ref options 'complete #f))
           (to-add (option-ref options 'add #f)))
@@ -57,9 +58,12 @@
                                  (save-items!
                                   (work-item-replace item-to-complete (work-item-complete item-to-complete) items))))
                   (to-add (let* ((item-text (option-ref options 'text #f))
-                                 (due-str (option-ref options 'due #f)))
+                                 (due-str (option-ref options 'due #f))
+                                 (interactive? (option-ref options 'interactive #f)))
                             (save-items!
                              (add-work-item-to-lst
-                              (work-item #:text item-text
-                                         #:due-date (if due-str (string->date due-str "~d/~m/~Y") #f))
+                              (if interactive?
+                                  (interactive-create-work-item)
+                                  (work-item #:text item-text
+                                             #:due-date (if due-str (string->date due-str "~d/~m/~Y") #f)))
                               items)))))))))) ;;TODO: Make a much better parser for dates.
