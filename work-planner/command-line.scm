@@ -65,6 +65,12 @@
              (filter (make-filter-work-due-in-n-days n date) items))))
 (export construct-due-in-n-days)
 
+(define* (construct-all-items items) ;;TODO: Show due if available.
+  (cons "All work items: "
+        (map list-item-string-representation
+             (sort items (lambda (y x) (< (work-item-id y) (work-item-id x)))))))
+(export construct-all-items)
+
 (define* (summary-screen items #:optional (date (current-date)))
   (let ((lines
          (list (construct-to-be-done-on-date items date)
