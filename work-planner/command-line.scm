@@ -71,10 +71,9 @@
              (sort items (lambda (y x) (< (work-item-id y) (work-item-id x)))))))
 (export construct-all-items)
 
-(define (show-all-items items)
+(define-public (show-all-items items)
   (let ((lines (construct-all-items items)))
     (string-append (string-join lines "\n") "\n")))
-(export (show-all-items))
 
 (define* (summary-screen items #:optional (date (current-date)))
   (let ((lines
