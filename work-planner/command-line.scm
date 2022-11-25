@@ -29,7 +29,7 @@
                                           #:key show-due-date
                                           (date-format "~d/~m/~y ~T"))
   (let ((date-str
-         (if show-due-date
+         (if (and show-due-date (work-item-due-date item))
              (string-append
               (date->string (work-item-due-date item) date-format)
               ": ")
