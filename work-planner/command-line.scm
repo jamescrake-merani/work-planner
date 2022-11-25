@@ -86,7 +86,7 @@
     (catch #t
       (lambda ()
         (string->date user-input date-template))
-      (lambda () ;;TODO: Perhaps be more specific about what the error is.
+      (lambda (e . args) ;;TODO: Perhaps be more specific about what the error is.
         (display "Incorrect date format")
         (newline)
         (prompt-due-date)))))
