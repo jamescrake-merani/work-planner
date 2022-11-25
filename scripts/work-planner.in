@@ -69,4 +69,4 @@
                                   (work-item #:text item-text
                                              #:due-date (if due-str (string->date due-str "~d/~m/~Y") #f)))
                               items))))
-                  (show-all (show-all-items items)))))))) ;;TODO: Make a much better parser for dates.
+                  (show-all (display (show-all-items items))))))))) ;;TODO: Make a much better parser for dates.
