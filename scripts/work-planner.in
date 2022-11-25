@@ -43,15 +43,17 @@
                               (single-char #\t))
                         (due (value #t)
                              (single-char #\d))
-                        (interactive (single-char #\i)))) ;;TODO: add more options.
+                        (interactive (single-char #\i))
+                        (all))) ;;TODO: add more options.
          (options (getopt-long args option-spec)))
     (let ((to-complete (option-ref options 'complete #f))
-          (to-add (option-ref options 'add #f)))
+          (to-add (option-ref options 'add #f))
+          (show-all (option-ref options 'all #f)))
       (let* ((items-port (open items-dir O_RDONLY))
              (items-json (get-string-all items-port))
              (items (json-string->work-items items-json)))
         (close items-port)
-        (if (not (or to-complete to-add))
+        (if (not (or to-complete to-add show-all))
             (display (summary-screen items))
             (cond (to-complete (let* ((to-complete-int (string->number to-complete))
                                         (item-to-complete (find (lambda (i) (= (assoc-ref i "id") to-complete-int)) items)))
@@ -66,4 +68,5 @@
                                   (interactive-create-work-item)
                                   (work-item #:text item-text
                                              #:due-date (if due-str (string->date due-str "~d/~m/~Y") #f)))
-                              items)))))))))) ;;TODO: Make a much better parser for dates.
+                              items))))
+                  (show-all (show-all-items items)))))))) ;;TODO: Make a much better parser for dates.
