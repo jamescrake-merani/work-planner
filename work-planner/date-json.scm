@@ -121,3 +121,6 @@
   (cons new-item
         (filter (lambda (i)
                   (not (= (work-item-id i) (work-item-id old-item)))) items)))
+
+(define-public (designated-work-item-date item date)
+  (cons (cons "designated-completion-dates" date) (alist-delete "designated-completion-dates" item)))
