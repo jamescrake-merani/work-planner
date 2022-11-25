@@ -53,20 +53,19 @@
              (items-json (get-string-all items-port))
              (items (json-string->work-items items-json)))
         (close items-port)
-        (if (not (or to-complete to-add show-all))
-            (display (summary-screen items))
-            (cond (to-complete (let* ((to-complete-int (string->number to-complete))
-                                        (item-to-complete (find (lambda (i) (= (assoc-ref i "id") to-complete-int)) items)))
-                                 (save-items!
-                                  (work-item-replace item-to-complete (work-item-complete item-to-complete) items))))
-                  (to-add (let* ((item-text (option-ref options 'text #f))
-                                 (due-str (option-ref options 'due #f))
-                                 (interactive? (option-ref options 'interactive #f)))
-                            (save-items!
-                             (add-work-item-to-lst
-                              (if interactive?
-                                  (interactive-create-work-item)
-                                  (work-item #:text item-text
-                                             #:due-date (if due-str (string->date due-str "~d/~m/~Y") #f)))
-                              items))))
-                  (show-all (display (show-all-items items))))))))) ;;TODO: Make a much better parser for dates.
+        (cond (to-complete (let* ((to-complete-int (string->number to-complete))
+                                  (item-to-complete (find (lambda (i) (= (assoc-ref i "id") to-complete-int)) items)))
+                             (save-items!
+                              (work-item-replace item-to-complete (work-item-complete item-to-complete) items))))
+              (to-add (let* ((item-text (option-ref options 'text #f))
+                             (due-str (option-ref options 'due #f))
+                             (interactive? (option-ref options 'interactive #f)))
+                        (save-items!
+                         (add-work-item-to-lst
+                          (if interactive?
+                              (interactive-create-work-item)
+                              (work-item #:text item-text
+                                         #:due-date (if due-str (string->date due-str "~d/~m/~Y") #f))) ;;TODO: Make a much better parser for dates.
+                          items))))
+              (show-all (display (show-all-items items)))
+              (else (display (summary-screen items))))))))
