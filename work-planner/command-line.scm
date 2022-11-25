@@ -22,12 +22,12 @@
              (ice-9 format)
              (ice-9 readline))
 
-(define date-template "~d/~m/~y ~T")
+(define date-template "~d/~m/~Y")
 
 ;; This function is going to be extended a lot.
 (define* (work-item-string-representation item
                                           #:key show-due-date
-                                          (date-format date-template))
+                                          (date-format "~d/~m/~y ~T"))
   (let ((date-str
          (if show-due-date
              (string-append
