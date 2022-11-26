@@ -29,8 +29,7 @@
   (let ((base-format "~d/~m/~y"))
     (if (is-midnight? to-format)
         base-format
-        (string-append base-format " ~T")))
-  )
+        (string-append base-format " ~T"))))
 
 ;; This function is going to be extended a lot.
 (define* (work-item-string-representation item
