@@ -52,7 +52,7 @@
 
 (define* (list-item-string-representation item
                                           #:key show-due-date
-                                          (date-format "~d/~m/~y ~T"))
+                                          (date-format 'default))
   "Represents each work item as a list item (with a '-' before it)"
   (string-append "- " (work-item-string-representation
                        item
