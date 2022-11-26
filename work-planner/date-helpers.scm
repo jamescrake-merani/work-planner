@@ -28,3 +28,9 @@
 (define-public (days-between-dates date1 date2)
   (apply -
          (map date->julian-day (list date1 date2))))
+
+(define-public (is-midnight? d)
+  (and
+   (= (date-second d) 0)
+   (= (date-minute d) 0)
+   (= (date-hour d) 0)))
