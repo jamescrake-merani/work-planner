@@ -46,6 +46,18 @@
     (save-items!
      (work-item-replace item-to-complete (work-item-complete item-to-complete) items))) )
 
+(define (add-action options items)
+  (let* ((item-text (option-ref options 'text #f))
+         (due-str (option-ref options 'due #f))
+         (interactive? (option-ref options 'interactive #f)))
+    (save-items!
+     (add-work-item-to-lst
+      (if interactive?
+          (interactive-create-work-item)
+          (work-item #:text item-text
+                     #:due-date (if due-str (string->date due-str "~d/~m/~Y") #f))) ;;TODO: Make a much better parser for dates.
+      items))))
+
 ;; FIXME: There is no error handling here.
 (define (main args)
   (let* ((option-spec '((complete (value #t)
@@ -65,16 +77,7 @@
           (designate (option-ref options 'designate #f))
           (items (load-work-items)))
       (cond (to-complete (complete-action to-complete items))
-            (to-add (let* ((item-text (option-ref options 'text #f))
-                           (due-str (option-ref options 'due #f))
-                           (interactive? (option-ref options 'interactive #f)))
-                      (save-items!
-                       (add-work-item-to-lst
-                        (if interactive?
-                            (interactive-create-work-item)
-                            (work-item #:text item-text
-                                       #:due-date (if due-str (string->date due-str "~d/~m/~Y") #f))) ;;TODO: Make a much better parser for dates.
-                        items))))
+            (to-add (add-action options items))
             (designate (let* ((date-str (option-ref options 'due #f)) ;;TODO: Perhaps create a seperate date field.
                               (desig-date (if date-str (string->date date-str "~d/~m/~Y") (current-date)))
                               (old-work-item (get-work-item items (string->number designate))))
