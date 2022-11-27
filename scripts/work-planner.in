@@ -40,6 +40,12 @@
     (close items-port)
     (json-string->work-items items-json)))
 
+(define (complete-action to-complete items)
+  (let* ((to-complete-int (string->number to-complete))
+         (item-to-complete (find (lambda (i) (= (assoc-ref i "id") to-complete-int)) items)))
+    (save-items!
+     (work-item-replace item-to-complete (work-item-complete item-to-complete) items))) )
+
 ;; FIXME: There is no error handling here.
 (define (main args)
   (let* ((option-spec '((complete (value #t)
@@ -58,10 +64,7 @@
           (show-all (option-ref options 'all #f))
           (designate (option-ref options 'designate #f))
           (items (load-work-items)))
-      (cond (to-complete (let* ((to-complete-int (string->number to-complete))
-                                (item-to-complete (find (lambda (i) (= (assoc-ref i "id") to-complete-int)) items)))
-                           (save-items!
-                            (work-item-replace item-to-complete (work-item-complete item-to-complete) items))))
+      (cond (to-complete (complete-action to-complete items))
             (to-add (let* ((item-text (option-ref options 'text #f))
                            (due-str (option-ref options 'due #f))
                            (interactive? (option-ref options 'interactive #f)))
