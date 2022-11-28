@@ -80,10 +80,10 @@
              (sort items (lambda (y x) (< (work-item-id y) (work-item-id x)))))))
 (export construct-all-items)
 
-(define* (construct-overdue items)
+(define* (construct-overdue items #:optional (date (current-date)))
   (cons "OVERDUE!!:"
         (map (lambda (i) (list-item-string-representation i #:show-due-date #t))
-             (filter (make-filter-work-overdue) items))))
+             (filter (make-filter-work-overdue date) items))))
 (export construct-overdue)
 
 (define-public (show-all-items items)
