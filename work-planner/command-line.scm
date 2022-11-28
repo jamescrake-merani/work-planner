@@ -74,7 +74,7 @@
              (filter (make-filter-work-due-in-n-days n date) items))))
 (export construct-due-in-n-days)
 
-(define* (construct-all-items items) ;;TODO: Show due if available.
+(define* (construct-all-items items)
   (cons "All work items: "
         (map (lambda (i) (list-item-string-representation i #:show-due-date #t))
              (sort items (lambda (y x) (< (work-item-id y) (work-item-id x)))))))
