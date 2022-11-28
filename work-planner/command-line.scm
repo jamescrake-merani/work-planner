@@ -93,7 +93,8 @@
 (define* (summary-screen items #:optional (date (current-date)))
   (let ((lines
          (list (construct-to-be-done-on-date items date)
-               (construct-due-in-n-days items date))))
+               (construct-due-in-n-days items date)
+               (construct-overdue items date))))
     (string-append (string-join (list-transduce tflatten rcons lines) "\n") "\n")))
 (export summary-screen)
 
