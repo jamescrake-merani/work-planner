@@ -80,6 +80,12 @@
              (sort items (lambda (y x) (< (work-item-id y) (work-item-id x)))))))
 (export construct-all-items)
 
+(define* (construct-overdue items)
+  (cons "OVERDUE!!:"
+        (map (lambda (i) (list-item-string-representation i #:show-due-date #t))
+             (filter (make-filter-work-overdue) items))))
+(export construct-overdue)
+
 (define-public (show-all-items items)
   (let ((lines (construct-all-items items)))
     (string-append (string-join lines "\n") "\n")))
