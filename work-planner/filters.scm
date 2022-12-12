@@ -40,8 +40,7 @@
 (define* (make-filter-work-overdue #:optional (from (current-date)))
   (lambda (item)
     (let ((due-date (work-item-due-date item)))
-      (and due-date from
-           (>= (days-between-dates from (work-item-due-date item)) 0))) ))
+      (and due-date from (past-date? from due-date))) ))
 (export make-filter-work-overdue)
 
 (define-public (filter-no-to-be-done-date item)

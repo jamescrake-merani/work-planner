@@ -34,3 +34,6 @@
    (= (date-second d) 0)
    (= (date-minute d) 0)
    (= (date-hour d) 0)))
+
+(define-public (past-date? date1 date2)
+  (>= (days-between-dates date1 date2) 0))
