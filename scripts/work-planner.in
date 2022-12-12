@@ -72,7 +72,7 @@
 (define (purge-work-items! options items)
   (let ((no-confirm (option-ref options 'no-confirm #f))
         (new-items (purge-work-items items)))
-    (if (or no-confirm (string=? (string-upcase (readline (format #f "Are you sure you want to purge ~d items? y/N" (- (length items) (length new-items))))) "Y"))
+    (if (or no-confirm (string=? (string-upcase (readline (format #f "Are you sure you want to purge ~d items? (y/N): " (- (length items) (length new-items))))) "Y"))
         (save-items! new-items)
         (format #t "No work items have been purged.~%"))))
 
