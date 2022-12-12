@@ -53,3 +53,4 @@
 (define* (filter-purgable item #:optional (today (current-date)))
   (let ((due-date (work-item-due-date item)))
     (not (and (work-item-complete item) due-date (past-date? today due-date)))))
+(export filter-purgable)
