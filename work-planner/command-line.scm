@@ -132,3 +132,6 @@
   (work-item
    #:text (prompt-text)
    #:due-date (prompt-due-date)))
+
+(define-public (purge-work-items items)
+  (filter filter-purgable items))
