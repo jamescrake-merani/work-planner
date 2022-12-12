@@ -117,10 +117,12 @@
         proposed-text)))
 
 (define (prompt-due-date) ;;TODO: Inform the user of what the right format is.
-  (let ((user-input (readline "Please enter a date in the appropriate format: ")))
+  (let ((user-input (readline "Please enter a date in the appropriate format (empty for no due date): ")))
     (catch #t
       (lambda ()
-        (string->date user-input date-template))
+        (if (string=? user-input "")
+            #f
+            (string->date user-input date-template)))
       (lambda (e . args) ;;TODO: Perhaps be more specific about what the error is.
         (display "Incorrect date format")
         (newline)
