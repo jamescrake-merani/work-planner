@@ -35,18 +35,18 @@
 (define* (work-item-string-representation item
                                           #:key show-due-date
                                           (date-format 'default))
-  (let ((format-str (if (eq? date-format 'default) (default-date-format (work-item-due-date item)) date-format)))
-    (let ((date-str
-           (if (and show-due-date (work-item-due-date item))
-               (string-append
-                (date->string (work-item-due-date item) format-str)
-                ": ")
-               ""))
-          (completion-str
-           (if (work-item-completed? item)
-               "COMPLETED: "
-               "")))
-      (format #f "~a~a[~d]~a" date-str completion-str (work-item-id item) (work-item-text item)))))
+  (let ((date-str
+         (if (and show-due-date (work-item-due-date item))
+             (string-append
+              (date->string (work-item-due-date item)
+                            (if (eq? date-format 'default) (default-date-format (work-item-due-date item)) date-format))
+              ": ")
+             ""))
+        (completion-str
+         (if (work-item-completed? item)
+             "COMPLETED: "
+             "")))
+    (format #f "~a~a[~d]~a" date-str completion-str (work-item-id item) (work-item-text item))))
 
 (export work-item-string-representation)
 
