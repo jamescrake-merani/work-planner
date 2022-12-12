@@ -60,30 +60,37 @@
                        #:date-format date-format)))
 (export list-item-string-representation )
 
+(define (get-representation representation-func items-filter items)
+  (if (null? items)
+      (list "Nothing.")
+      (map representation-func (filter items-filter items))))
+
 ;; The following functions return a list of lines that are expected to be
 ;; printed onto the screen
 (define* (construct-to-be-done-on-date items #:optional (date (current-date)))
   (cons "To be done today:"
-        (map list-item-string-representation
-             (filter (make-filter-work-item-to-be-done-on-date date) items))))
+        (get-representation list-item-string-representation (make-filter-work-item-to-be-done-on-date date) items)))
 (export construct-to-be-done-on-date)
 
 (define* (construct-due-in-n-days items #:optional (date (current-date)) (n 7))
   (cons (format #f "Due in the next ~d days" n)
-        (map (lambda (i) (list-item-string-representation i #:show-due-date #t))
-             (filter (make-filter-work-due-in-n-days n date) items))))
+        (get-representation (lambda (i) (list-item-string-representation i #:show-due-date #t)) (make-filter-work-due-in-n-days n date))))
 (export construct-due-in-n-days)
 
 (define* (construct-all-items items)
   (cons "All work items: "
-        (map (lambda (i) (list-item-string-representation i #:show-due-date #t))
-             (sort items (lambda (y x) (< (work-item-id y) (work-item-id x)))))))
+        (get-representation
+         (lambda (i) (list-item-string-representation i #:show-due-date #t))
+         identity
+         (sort items (lambda (y x) (< (work-item-id y) (work-item-id x)))))))
 (export construct-all-items)
 
 (define* (construct-overdue items #:optional (date (current-date)))
   (cons "OVERDUE!!:"
-        (map (lambda (i) (list-item-string-representation i #:show-due-date #t))
-             (filter (make-filter-work-overdue date) items))))
+        (get-representation
+         (lambda (i) (list-item-string-representation i #:show-due-date #t))
+         (make-filter-work-overdue date)
+         items)))
 (export construct-overdue)
 
 (define-public (show-all-items items)
