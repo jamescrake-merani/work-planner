@@ -25,6 +25,7 @@
              (ice-9 textual-ports)
              (ice-9 getopt-long)
              (ice-9 format)
+             (ice-9 readline)
              (srfi srfi-1)
              (srfi srfi-19))
 
@@ -68,6 +69,13 @@
     (save-items!
      (work-item-replace old-work-item (designate-work-item-date old-work-item desig-date) items))))
 
+(define (purge-work-items! options items)
+  (let ((no-confirm (option-ref options 'no-confirm #f))
+        (new-items (purge-work-items items)))
+    (if (or no-confirm (string=? (string-upcase (readline (format #f "Are you sure you want to purge ~d items? y/N" (- (length items) (length new-items)))))))
+        (save-items! new-items)
+        (format #t "No work items have been purged.~%"))))
+
 ;; FIXME: There is no error handling here.
 (define (main args)
   (let* ((option-spec '((complete (value #t)
@@ -79,15 +87,19 @@
                              (single-char #\d))
                         (interactive (single-char #\i))
                         (all)
+                        (purge (single-char #\p))
+                        (no-confirm (single-char #\y))
                         (designate (value #t)))) ;;TODO: add more options.
          (options (getopt-long args option-spec)))
     (let ((to-complete (option-ref options 'complete #f))
           (to-add (option-ref options 'add #f))
           (show-all (option-ref options 'all #f))
           (designate (option-ref options 'designate #f))
+          (purge (option-ref options 'purge #f))
           (items (load-work-items)))
       (cond (to-complete (complete-action to-complete items))
             (to-add (add-action options items))
             (designate (designate-action options items designate))
             (show-all (display (show-all-items items)))
+            (purge (purge-work-items! options items))
             (else (display (summary-screen items)))))))
