@@ -74,7 +74,7 @@
 
 (define* (construct-due-in-n-days items #:optional (date (current-date)) (n 7))
   (cons (format #f "Due in the next ~d days" n)
-        (get-representation (lambda (i) (list-item-string-representation i #:show-due-date #t)) (make-filter-work-due-in-n-days n date))))
+        (get-representation (lambda (i) (list-item-string-representation i #:show-due-date #t)) (make-filter-work-due-in-n-days n date) items)))
 (export construct-due-in-n-days)
 
 (define* (construct-all-items items)
