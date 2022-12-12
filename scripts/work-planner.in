@@ -24,6 +24,7 @@
              (work-planner date-json)
              (ice-9 textual-ports)
              (ice-9 getopt-long)
+             (ice-9 format)
              (srfi srfi-1)
              (srfi srfi-19))
 
@@ -50,6 +51,8 @@
   (let* ((item-text (option-ref options 'text #f))
          (due-str (option-ref options 'due #f))
          (interactive? (option-ref options 'interactive #f)))
+    (if (and (not item-text) (not interactive?))
+        (format #t "You cannot create a work item without text.~%")) ;; TODO: Will not have an error return code.
     (save-items!
      (add-work-item-to-lst
       (if interactive?
