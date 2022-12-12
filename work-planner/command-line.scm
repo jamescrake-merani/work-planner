@@ -61,9 +61,11 @@
 (export list-item-string-representation )
 
 (define (get-representation representation-func items-filter items)
-  (if (null? items)
-      (list "Nothing.")
-      (map representation-func (filter items-filter items))))
+  (let ((filtered (filter items-filter items)))
+    (if (null? filtered)
+        (list "Nothing.")
+        (map representation-func filtered))))
+
 
 ;; The following functions return a list of lines that are expected to be
 ;; printed onto the screen
