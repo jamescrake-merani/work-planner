@@ -48,3 +48,8 @@
 
 (define-public (filter-no-due-date item)
   (not (work-item-due-date item)))
+
+;; TODO: What counts as purgable should be configurable.
+(define* (filter-purgable item #:optional (today (current-date)))
+  (let ((due-date (work-item-due-date item)))
+    (and (work-item-complete item) due-date (past-date? today due-date))))
