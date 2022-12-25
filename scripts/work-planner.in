@@ -43,7 +43,8 @@
     (unless (and (file-exists? work-planner-dir) (file-is-directory? work-planner-dir))
       (mkdir work-planner-dir)))
   (let ((port (open path (logior O_CREAT O_WRONLY))))
-    (display "[]\n" port)))
+    (display "[]\n" port)
+    (close port)))
 
 (define (load-work-items)
   (if (file-exists? items-dir)
