@@ -19,7 +19,8 @@
 ;;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;FIXME: Assumes that this dir already exists.
-(define items-dir "/home/jamescrake-merani/.local/share/work-planner/items.json")
+(define items-dir
+  (string-join (list (string-append file-name-separator-string "home") (getlogin) ".local" "share" "work-planner" ) file-name-separator-string))
 (use-modules (work-planner command-line)
              (work-planner date-json)
              (ice-9 textual-ports)
@@ -36,25 +37,28 @@
     (put-string port items-json)
     (close port)))
 
+(define (get-items-json-filename directory)
+  (string-append directory file-name-separator-string "items.json"))
+
 ;; This is the default for when the file does not exist.
 (define (create-empty-work-items-file path)
   ;; If mkdir fails because the dir already exists then this is not a problem. Ignore it.
-  (let ((work-planner-dir "/home/jamescrake-merani/.local/share/work-planner")) ;FIXME: Don't just use my home directory!
-    (unless (and (file-exists? work-planner-dir) (file-is-directory? work-planner-dir))
-      (mkdir work-planner-dir)))
-  (let ((port (open path (logior O_CREAT O_WRONLY))))
+  (unless (and (file-exists? path) (file-is-directory? path))
+    (mkdir items-dir))
+  (let ((port (open (get-items-json-filename path) (logior O_CREAT O_WRONLY))))
     (display "[]\n" port)
     (close port)))
 
 (define (load-work-items)
-  (if (file-exists? items-dir)
-      (let* ((items-port (open items-dir O_RDONLY))
-             (items-json (get-string-all items-port)))
-        (close items-port)
-        (json-string->work-items items-json))
-      (begin
-        (create-empty-work-items-file items-dir)
-        (load-work-items))))
+  (let ((items-filename (get-items-json-filename items-dir)))
+    (if (file-exists? items-filename)
+        (let* ((items-port (open items-filename O_RDONLY))
+               (items-json (get-string-all items-port)))
+          (close items-port)
+          (json-string->work-items items-json))
+        (begin
+          (create-empty-work-items-file items-dir)
+          (load-work-items)))))
 
 (define (complete-action to-complete items)
   (let* ((to-complete-int (string->number to-complete))
