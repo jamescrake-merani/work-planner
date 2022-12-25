@@ -36,7 +36,9 @@ SOURCES = f.scm \
           work-planner/date-json.scm \
           work-planner/filters.scm \
           work-planner/date-helpers.scm \
-          work-planner/command-line.scm
+          work-planner/command-line.scm \
+          f/ports.scm \
+          f/re-exports.scm
 
 TESTS = tests/filter-tests.scm
 
