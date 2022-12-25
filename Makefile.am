@@ -32,7 +32,8 @@ SUFFIXES = .scm .go
 .scm.go:
 	$(AM_V_GEN)$(top_builddir)/pre-inst-env $(GUILE_TOOLS) compile $(GUILE_WARNINGS) -o "$@" "$<"
 
-SOURCES = work-planner/date-json.scm \
+SOURCES = f.scm \
+          work-planner/date-json.scm \
           work-planner/filters.scm \
           work-planner/date-helpers.scm \
           work-planner/command-line.scm

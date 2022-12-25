@@ -12,7 +12,8 @@
   (dependencies `())
   (skip ())
   (files (libraries
-           ((directory
+           ((scheme-file "f")
+            (directory
               "work-planner"
               ((scheme-file "date-json")
                (scheme-file "filters")
