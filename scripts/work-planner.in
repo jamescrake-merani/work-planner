@@ -36,11 +36,24 @@
     (put-string port items-json)
     (close port)))
 
+;; This is the default for when the file does not exist.
+(define (create-empty-work-items-file path)
+  ;; If mkdir fails because the dir already exists then this is not a problem. Ignore it.
+  (let ((work-planner-dir "/home/jamescrake-merani/.local/share/work-planner")) ;FIXME: Don't just use my home directory!
+    (unless (and (file-exists? work-planner-dir) (file-is-directory? work-planner-dir))
+      (mkdir work-planner-dir)))
+  (let ((port (open path (logior O_CREAT O_WRONLY))))
+    (display "[]\n" port)))
+
 (define (load-work-items)
-  (let* ((items-port (open items-dir O_RDONLY))
-         (items-json (get-string-all items-port)))
-    (close items-port)
-    (json-string->work-items items-json)))
+  (if (file-exists? items-dir)
+      (let* ((items-port (open items-dir O_RDONLY))
+             (items-json (get-string-all items-port)))
+        (close items-port)
+        (json-string->work-items items-json))
+      (begin
+        (create-empty-work-items-file items-dir)
+        (load-work-items))))
 
 (define (complete-action to-complete items)
   (let* ((to-complete-int (string->number to-complete))
