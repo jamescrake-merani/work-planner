@@ -1,0 +1,59 @@
+.TH WORK-PLANNER 1 2022-12-25
+
+.SH NAME
+work\-planner \- diary planner for work items
+
+.SH SYNOPOSIS
+.B work\-planner
+[\fB\-c | \-\-complete \fIitem\-id\fR]
+[\fB\-a | \-\-add\fR]
+[\fB\-t | \-\-text \fItext\fR]
+[\fB\-d | \-\-due \fIdate\fR]
+[\fB\-i | \-\-interactive\fR]
+[\fB\-\-all\fR]
+[\fB\-p | \-\-purge\fR]
+[\fB\-y | \-\-no\-confirm\fR]
+[\fB\-\-designate \fIitem\-id\fR]
+
+.SH DESCRIPTION
+.B work\-planner
+is a program designed to help you keep track of all the work items you must do
+each day. Each work item can be 'designated' to be completed on specific days.
+You are then able to view a summary screen which will detail items that are
+designated to be completed today, alongside upcoming deadlines.
+
+Work\-planner's design is oriented around the idea that you accumulate a list of
+work items as you come up with them. You can then use these items as building
+blocks for what you will do in your day, building up a list of items before
+slowly ticking them off.
+
+.SH OPTIONS
+.TP
+.BR \-c ", " \-\-complete " " \fIitem\-id
+Mark a specified work item as completed.
+.TP
+.BR \-a ", " \-\-add
+Add a new work item.
+.BR \-t ", " \--text
+Specify the text of the work item being added.
+.TP
+.BR \-d ", " \-\-due
+Specify the due date of the work item being added.
+.TP
+.BR \-i ", " \-\-interactive
+work\-planner will prompt for fields on the command line rather than accepting
+them as arguments in the command itself
+.TP
+.BR \-\-all
+Show all work items that work\-planner knows about.
+.TP
+.BR \-p ", " \-\-purge
+Purge all work items that have been completed, and don't have an upcoming due
+date.
+.TP
+.BR \-y ", " \-\-no-confirm
+Do not ask for confirmation when purging work items
+.TP
+.BR \-\-designated " " \fIitem\-id
+Designated a specifed work\-item to be completed today, or alternatively, on the
+date specified by the due field.
