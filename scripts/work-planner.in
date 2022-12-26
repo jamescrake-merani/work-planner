@@ -30,15 +30,15 @@
              (srfi srfi-1)
              (srfi srfi-19))
 
+(define (get-items-json-filename directory)
+  (string-append directory file-name-separator-string "items.json"))
+
 (define (save-items! items)
   (let ((items-json (work-items->json-string items))
-        (port (open items-dir O_WRONLY)))
+        (port (open (get-items-json-filename items-dir) O_WRONLY)))
     (truncate-file port 0)
     (put-string port items-json)
     (close port)))
-
-(define (get-items-json-filename directory)
-  (string-append directory file-name-separator-string "items.json"))
 
 ;; This is the default for when the file does not exist.
 (define (create-empty-work-items-file path)
@@ -66,19 +66,25 @@
     (save-items!
      (work-item-replace item-to-complete (work-item-complete item-to-complete) items))) )
 
-(define (add-action options items)
+(define (add-action options items quiet)
   (let* ((item-text (option-ref options 'text #f))
          (due-str (option-ref options 'due #f))
          (interactive? (option-ref options 'interactive #f)))
     (if (and (not item-text) (not interactive?))
         (format #t "You cannot create a work item without text.~%")) ;; TODO: Will not have an error return code.
-    (save-items!
-     (add-work-item-to-lst
-      (if interactive?
-          (interactive-create-work-item)
-          (work-item #:text item-text
-                     #:due-date (if due-str (string->date due-str "~d/~m/~Y") #f))) ;;TODO: Make a much better parser for dates.
-      items))))
+    (let* ((new-work-item
+            (if interactive?
+                (interactive-create-work-item)
+                (work-item #:text item-text
+                           #:due-date (if due-str (string->date due-str "~d/~m/~Y") #f))))
+           (new-work-items-lst (add-work-item-to-lst new-work-item items)))
+      (save-items!
+       new-work-items-lst)
+      (unless quiet
+        ;; For the output, we need to find out what id the new work item was
+        ;; given. We're thence assuming that the work item is the car of the new
+        ;; list. This will break if that behaviour ever changes!
+        (format #t "Work item created with id [~d]~%" (work-item-id (car new-work-items-lst)))))))
 
 (define (designate-action options items designate)
   (let* ((date-str (option-ref options 'due #f)) ;;TODO: Perhaps create a seperate date field.
@@ -107,16 +113,18 @@
                         (all)
                         (purge (single-char #\p))
                         (no-confirm (single-char #\y))
-                        (designate (value #t)))) ;;TODO: add more options.
+                        (designate (value #t))
+                        (quiet (single-char #\q)))) ;;TODO: add more options.
          (options (getopt-long args option-spec)))
     (let ((to-complete (option-ref options 'complete #f))
           (to-add (option-ref options 'add #f))
           (show-all (option-ref options 'all #f))
           (designate (option-ref options 'designate #f))
           (purge (option-ref options 'purge #f))
+          (quiet (option-ref options 'quiet #f))
           (items (load-work-items)))
       (cond (to-complete (complete-action to-complete items))
-            (to-add (add-action options items))
+            (to-add (add-action options items quiet))
             (designate (designate-action options items designate))
             (show-all (display (show-all-items items)))
             (purge (purge-work-items! options items))
