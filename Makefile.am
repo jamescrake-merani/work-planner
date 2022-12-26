@@ -58,6 +58,7 @@ AM_TESTS_ENVIRONMENT = abs_top_srcdir="$(abs_top_srcdir)"
 
 info_TEXINFOS = doc/version.texi \
                 doc/work-planner.texi
+man1_MANS = doc/work-planner.man
 dvi: # Don't build dvi docs
 
 EXTRA_DIST += ChangeLog \
