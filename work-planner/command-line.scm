@@ -95,6 +95,13 @@
          items)))
 (export construct-overdue)
 
+(define* (construct-undesignated items #:optional (date (current-date)))
+  (cons "The following items have not been designated:"
+        (get-representation
+         (lambda (i) (list-item-string-representation i #:show-due-date #t))
+         (make-filter-undesignated date)
+         items)))
+
 (define-public (show-all-items items)
   (let ((lines (construct-all-items items)))
     (string-append (string-join lines "\n") "\n")))
@@ -103,7 +110,8 @@
   (let ((lines
          (list (construct-to-be-done-on-date items date)
                (construct-due-in-n-days items date)
-               (construct-overdue items date))))
+               (construct-overdue items date)
+               (construct-undesignated items date))))
     (string-append (string-join (list-transduce tflatten rcons lines) "\n") "\n")))
 (export summary-screen)
 
