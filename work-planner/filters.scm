@@ -43,6 +43,12 @@
       (and due-date from (past-date? from due-date))) ))
 (export make-filter-work-overdue)
 
+(define* (make-filter-undesignated #:optional (from (current-date)))
+  "Items which have no future designated completion dates"
+  (lambda (item)
+    (let ((designated-completion (work-item-designated-completion-dates item)))
+      (or (not designated-completion) (past-date? from designated-completion)))))
+
 (define-public (filter-no-to-be-done-date item)
   (not (work-item-designated-completion-dates item)))
 
