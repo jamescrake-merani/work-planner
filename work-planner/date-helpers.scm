@@ -37,5 +37,5 @@
 
 (define* (past-date? date1 date2 #:optional (inclusive #t))
   (let ((comparer (if inclusive >= >)))
-    (comparer (days-between-dates date1 date2) 0)))
+    (comparer (truncate (days-between-dates date1 date2)) 0)))
 (export past-date?)
