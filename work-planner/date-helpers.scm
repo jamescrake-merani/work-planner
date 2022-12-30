@@ -35,5 +35,7 @@
    (= (date-minute d) 0)
    (= (date-hour d) 0)))
 
-(define-public (past-date? date1 date2)
-  (>= (days-between-dates date1 date2) 0))
+(define* (past-date? date1 date2 #:optional (inclusive #t))
+  (let ((comparer (if inclusive >= >)))
+    (comparer (days-between-dates date1 date2) 0)))
+(export past-date?)
