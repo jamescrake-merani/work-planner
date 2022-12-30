@@ -47,7 +47,8 @@
   "Items which have no future designated completion dates"
   (lambda (item)
     (let ((designated-completion (work-item-designated-completion-dates item)))
-      (or (not designated-completion) (past-date? from designated-completion #f)))))
+      (and (not (work-item-completed? item))
+           (or  (not designated-completion) (past-date? from designated-completion #f))))))
 (export make-filter-undesignated)
 
 (define-public (filter-no-to-be-done-date item)
