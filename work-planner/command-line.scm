@@ -60,47 +60,48 @@
                        #:date-format date-format)))
 (export list-item-string-representation )
 
-(define (get-representation representation-func items-filter items)
+(define (get-representation beginning-text representation-func items-filter items)
   (let ((filtered (filter items-filter items)))
     (if (null? filtered)
-        (list "Nothing.")
-        (map representation-func filtered))))
+        '()
+        (cons beginning-text (map representation-func filtered)))))
 
 
 ;; The following functions return a list of lines that are expected to be
 ;; printed onto the screen
 (define* (construct-to-be-done-on-date items #:optional (date (current-date)))
-  (cons "To be done today:"
-        (get-representation list-item-string-representation (make-filter-work-item-to-be-done-on-date date) items)))
+  (get-representation "To be done today:"
+                      list-item-string-representation
+                      (make-filter-work-item-to-be-done-on-date date)
+                      items))
 (export construct-to-be-done-on-date)
 
 (define* (construct-due-in-n-days items #:optional (date (current-date)) (n 7))
-  (cons (format #f "Due in the next ~d days:" n)
-        (get-representation (lambda (i) (list-item-string-representation i #:show-due-date #t)) (make-filter-work-due-in-n-days n date) items)))
+  (get-representation (format #f "Due in the next ~d days:" n)
+                      (lambda (i) (list-item-string-representation i #:show-due-date #t))
+                      (make-filter-work-due-in-n-days n date)
+                      items))
 (export construct-due-in-n-days)
 
 (define* (construct-all-items items)
-  (cons "All work items: "
-        (get-representation
-         (lambda (i) (list-item-string-representation i #:show-due-date #t))
-         identity
-         (sort items (lambda (y x) (< (work-item-id y) (work-item-id x)))))))
+  (get-representation "All work items: "
+                      (lambda (i) (list-item-string-representation i #:show-due-date #t))
+                      identity
+                      (sort items (lambda (y x) (< (work-item-id y) (work-item-id x))))))
 (export construct-all-items)
 
 (define* (construct-overdue items #:optional (date (current-date)))
-  (cons "OVERDUE!!:"
-        (get-representation
-         (lambda (i) (list-item-string-representation i #:show-due-date #t))
-         (make-filter-work-overdue date)
-         items)))
+  (get-representation  "OVERDUE!!:"
+                       (lambda (i) (list-item-string-representation i #:show-due-date #t))
+                       (make-filter-work-overdue date)
+                       items))
 (export construct-overdue)
 
 (define* (construct-undesignated items #:optional (date (current-date)))
-  (cons "The following items have not been designated:"
-        (get-representation
-         (lambda (i) (list-item-string-representation i #:show-due-date #t))
-         (make-filter-undesignated date)
-         items)))
+  (get-representation "The following items have not been designated:"
+                      (lambda (i) (list-item-string-representation i #:show-due-date #t))
+                      (make-filter-undesignated date)
+                      items))
 
 (define-public (show-all-items items)
   (let ((lines (construct-all-items items)))
