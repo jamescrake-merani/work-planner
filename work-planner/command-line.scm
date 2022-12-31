@@ -109,11 +109,17 @@
 
 (define* (summary-screen items #:optional (date (current-date)))
   (let ((lines
-         (list (construct-to-be-done-on-date items date)
+         (filter ;; Get rid of any empty ones.
+          (lambda (l) (not (null? l)))
+          (list (construct-to-be-done-on-date items date)
                (construct-due-in-n-days items date)
                (construct-overdue items date)
-               (construct-undesignated items date))))
-    (string-append (string-join (list-transduce tflatten rcons lines) "\n") "\n")))
+               (construct-undesignated items date))
+          )))
+    (if (null? lines)
+        "There is nothing to report on the summary screen. Enjoy!
+P.S: If you want to see all the work items, just do work-planner --all\n"
+        (string-append (string-join (list-transduce tflatten rcons lines) "\n") "\n"))))
 (export summary-screen)
 
 (define (prompt-text)
