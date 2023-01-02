@@ -18,6 +18,7 @@
 (use-modules (work-planner date-json)
              (work-planner date-helpers)
              (work-planner filters)
+             (work-planner colours)
              (srfi srfi-19)
              (srfi srfi-171)
              (ice-9 format)
@@ -60,48 +61,54 @@
                        #:date-format date-format)))
 (export list-item-string-representation )
 
-(define (get-representation beginning-text representation-func items-filter items)
+(define (get-representation beginning-text representation-func items-filter items colours)
   (let ((filtered (filter items-filter items)))
     (if (null? filtered)
         '()
-        (cons beginning-text (map representation-func filtered)))))
+        (cons (string-append (colour-scheme-header colours) beginning-text reset-colours)
+              (map representation-func filtered)))))
 
 
 ;; The following functions return a list of lines that are expected to be
 ;; printed onto the screen
-(define* (construct-to-be-done-on-date items #:optional (date (current-date)))
+(define* (construct-to-be-done-on-date items #:optional (date (current-date)) (colours no-colour-scheme))
   (get-representation "To be done today:"
                       list-item-string-representation
                       (make-filter-work-item-to-be-done-on-date date)
-                      items))
+                      items
+                      colours))
 (export construct-to-be-done-on-date)
 
-(define* (construct-due-in-n-days items #:optional (date (current-date)) (n 7))
+(define* (construct-due-in-n-days items #:optional (date (current-date)) (n 7) (colours no-colour-scheme))
   (get-representation (format #f "Due in the next ~d days:" n)
                       (lambda (i) (list-item-string-representation i #:show-due-date #t))
                       (make-filter-work-due-in-n-days n date)
-                      items))
+                      items
+                      colours))
 (export construct-due-in-n-days)
 
-(define* (construct-all-items items)
+(define* (construct-all-items items #:optional colours)
   (get-representation "All work items: "
                       (lambda (i) (list-item-string-representation i #:show-due-date #t))
                       identity
-                      (sort items (lambda (y x) (< (work-item-id y) (work-item-id x))))))
+                      (sort items (lambda (y x) (< (work-item-id y) (work-item-id x))))
+                      colours))
 (export construct-all-items)
 
-(define* (construct-overdue items #:optional (date (current-date)))
+(define* (construct-overdue items #:optional (date (current-date)) (colours no-colour-scheme))
   (get-representation  "OVERDUE!!:"
                        (lambda (i) (list-item-string-representation i #:show-due-date #t))
                        (make-filter-work-overdue date)
-                       items))
+                       items
+                       colours))
 (export construct-overdue)
 
-(define* (construct-undesignated items #:optional (date (current-date)))
+(define* (construct-undesignated items #:optional (date (current-date)) (colours no-colour-scheme))
   (get-representation "The following items have not been designated:"
                       (lambda (i) (list-item-string-representation i #:show-due-date #t))
                       (make-filter-undesignated date)
-                      items))
+                      items
+                      colours))
 
 (define-public (show-all-items items)
   (let ((lines (construct-all-items items)))
@@ -111,13 +118,14 @@
   (string-append (string-join (list-transduce tflatten rcons lines) "\n") "\n"))
 
 (define* (summary-screen items #:optional (date (current-date)))
-  (let ((lines
+  (let* ((colour-scheme default-colour-scheme)
+         (lines
          (filter ;; Get rid of any empty ones.
           (lambda (l) (not (null? l)))
-          (list (construct-to-be-done-on-date items date)
-               (construct-due-in-n-days items date)
-               (construct-overdue items date)
-               (construct-undesignated items date))
+          (list (construct-to-be-done-on-date items date colour-scheme)
+               (construct-due-in-n-days items date colour-scheme)
+               (construct-overdue items date colour-scheme)
+               (construct-undesignated items date colour-scheme))
           )))
     (if (null? lines)
         "There is nothing to report on the summary screen. Enjoy!
@@ -132,7 +140,8 @@ P.S: If you want to see all the work items, just do work-planner --all\n"
           (format #f "The items designated for ~a are:" date-str)
           (lambda (i) (list-item-string-representation i #:show-due-date #t))
           (make-filter-work-item-to-be-done-on-date day)
-          items)))
+          items
+          default-colour-scheme)))
     (if (null? representation)
         (format #f "There are no items designated for ~a\n" date-str)
         (item-lines->string representation))))
