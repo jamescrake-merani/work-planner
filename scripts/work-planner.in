@@ -87,7 +87,7 @@
         (format #t "Work item created with id [~d]~%" (work-item-id (car new-work-items-lst)))))))
 
 (define (designate-action options items designate)
-  (let* ((date-str (option-ref options 'due #f)) ;;TODO: Perhaps create a seperate date field.
+  (let* ((date-str (option-ref options 'date #f)) ;;TODO: Perhaps create a seperate date field.
          (desig-date (if date-str (string->date date-str "~d/~m/~Y") (current-date)))
          (old-work-item (get-work-item items (string->number designate))))
     (save-items!
