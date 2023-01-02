@@ -135,7 +135,7 @@ P.S: If you want to see all the work items, just do work-planner --all\n"
           items)))
     (if (null? representation)
         (format #f "There are no items designated for ~a" date-str)
-        (string-append representation "\n"))))
+        (item-lines->string representation))))
 
 (define (prompt-text)
   (let ((proposed-text (readline "Please enter the text for the work item: ")))
