@@ -18,7 +18,8 @@
               ((scheme-file "date-json")
                (scheme-file "filters")
                (scheme-file "date-helpers")
-               (scheme-file "command-line")))
+               (scheme-file "command-line")
+               (scheme-file "colours")))
             (directory
              "f"
              ((scheme-file "ports")
