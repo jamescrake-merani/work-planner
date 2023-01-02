@@ -36,3 +36,8 @@
   (colour-scheme
    #:header colour-red
    #:list-item colour-yellow))
+
+(define-public no-colour-scheme
+  (colour-scheme
+   #:header ""
+   #:list-item ""))
