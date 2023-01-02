@@ -14,17 +14,6 @@
 ;;; You should have received a copy of the GNU General Public License
 ;;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-(define* (colour-scheme #:key header list-item)
-  (list
-   (cons "header" header)
-   (cons "list-item" list-item)))
-
-(define (colour-scheme-header scheme)
-  (assoc-ref scheme "header"))
-
-(define (colour-scheme-list-item scheme)
-  (assoc-ref scheme "list-item"))
-
 (define-module (work-planner command-line))
 (use-modules (work-planner date-json)
              (work-planner date-helpers)
