@@ -31,3 +31,8 @@
 (define-public colour-red "\x1b[31m")
 (define-public colour-yellow "\x1b[33m")
 (define-public reset-colours "\x1b[0m")
+
+(define-public default-colour-scheme
+  (colour-scheme
+   #:header colour-red
+   #:list-item colour-yellow))
