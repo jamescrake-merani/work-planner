@@ -37,6 +37,7 @@ SOURCES = f.scm \
           work-planner/filters.scm \
           work-planner/date-helpers.scm \
           work-planner/command-line.scm \
+          work-planner/colours.scm \
           f/ports.scm \
           f/re-exports.scm
 
