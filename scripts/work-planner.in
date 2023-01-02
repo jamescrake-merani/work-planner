@@ -122,6 +122,9 @@
     (if (or no-confirm (string=? (string-upcase (readline (format #f "Are you sure you want to delete item [~d]? This action is irreversible! (y/N): " id))) "Y"))
         (save-items! (filter (lambda (i) (not (= (work-item-id i) id))) items)))))
 
+(define (action-view-day options date-str items)
+  (display (view-day items (string->date date-str "~d/~m/~Y"))))
+
 ;; FIXME: There is no error handling here.
 (define (main args)
   (let* ((option-spec '((complete (value #t)
@@ -139,7 +142,8 @@
                         (quiet (single-char #\q))
                         (edit (single-char #\e)
                               (value #t))
-                        (delete (value #t))))
+                        (delete (value #t))
+                        (view-day (value #t))))
          (options (getopt-long args option-spec)))
     (let ((to-complete (option-ref options 'complete #f))
           (to-add (option-ref options 'add #f))
@@ -149,6 +153,7 @@
           (to-edit (option-ref options 'edit #f))
           (to-delete (option-ref options 'delete #f))
           (quiet (option-ref options 'quiet #f))
+          (day-to-view (option-ref options 'view-day #f))
           (items (load-work-items)))
       (cond (to-complete (complete-action to-complete items))
             (to-add (add-action options items quiet))
@@ -157,4 +162,5 @@
             (purge (purge-work-items! options items))
             (to-edit (edit-item! options to-edit items))
             (to-delete (delete-item! options to-delete items))
+            (day-to-view (action-view-day options day-to-view items))
             (else (display (summary-screen items)))))))
