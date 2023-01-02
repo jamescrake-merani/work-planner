@@ -126,7 +126,7 @@ P.S: If you want to see all the work items, just do work-planner --all\n"
 (export summary-screen)
 
 (define-public (view-day items day)
-  (let* ((date-str (default-date-format day))
+  (let* ((date-str (date->string day (default-date-format day)))
          (representation
          (get-representation
           (format #f "The items designated for ~a are:" date-str)
