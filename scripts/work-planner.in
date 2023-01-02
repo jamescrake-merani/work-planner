@@ -116,6 +116,12 @@
                        #:completed (work-item-completed? old-item))))
         (save-items! (work-item-replace old-item new-item items))))))
 
+(define (delete-item! options id-str items)
+  (let ((no-confirm (option-ref options 'no-confirm #f))
+        (id (string->number id-str))) ;;TODO: Should this be abstracted into its own function?
+    (if (or no-confirm (string=? (string-upcase (readline (format #f "Are you sure you want to delete item [~d]? This action is irreversible! (y/N): " id))) "Y"))
+        (save-items! (filter (lambda (i) (not (= (work-item-id i) id))) items)))))
+
 ;; FIXME: There is no error handling here.
 (define (main args)
   (let* ((option-spec '((complete (value #t)
@@ -132,7 +138,8 @@
                         (designate (value #t))
                         (quiet (single-char #\q))
                         (edit (single-char #\e)
-                              (value #t))))
+                              (value #t))
+                        (delete (value #t))))
          (options (getopt-long args option-spec)))
     (let ((to-complete (option-ref options 'complete #f))
           (to-add (option-ref options 'add #f))
@@ -140,6 +147,7 @@
           (designate (option-ref options 'designate #f))
           (purge (option-ref options 'purge #f))
           (to-edit (option-ref options 'edit #f))
+          (to-delete (option-ref options 'delete #f))
           (quiet (option-ref options 'quiet #f))
           (items (load-work-items)))
       (cond (to-complete (complete-action to-complete items))
@@ -148,4 +156,5 @@
             (show-all (display (show-all-items items)))
             (purge (purge-work-items! options items))
             (to-edit (edit-item! options to-edit items))
+            (to-delete (delete-item! options to-delete items))
             (else (display (summary-screen items)))))))
