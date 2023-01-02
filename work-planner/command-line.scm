@@ -111,7 +111,7 @@
                       colours))
 
 (define-public (show-all-items items)
-  (let ((lines (construct-all-items items)))
+  (let ((lines (construct-all-items items default-colour-scheme)))
     (string-append (string-join lines "\n") "\n")))
 
 (define (item-lines->string lines)
