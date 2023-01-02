@@ -107,6 +107,9 @@
   (let ((lines (construct-all-items items)))
     (string-append (string-join lines "\n") "\n")))
 
+(define (item-lines->string lines)
+  (string-append (string-join (list-transduce tflatten rcons lines) "\n") "\n"))
+
 (define* (summary-screen items #:optional (date (current-date)))
   (let ((lines
          (filter ;; Get rid of any empty ones.
@@ -119,8 +122,20 @@
     (if (null? lines)
         "There is nothing to report on the summary screen. Enjoy!
 P.S: If you want to see all the work items, just do work-planner --all\n"
-        (string-append (string-join (list-transduce tflatten rcons lines) "\n") "\n"))))
+        (string-append (item-lines->string lines) "\n"))))
 (export summary-screen)
+
+(define-public (view-day items day)
+  (let* ((date-str (default-date-format day))
+         (representation
+         (get-representation
+          (format #f "The items designated for ~a are:" date-str)
+          (lambda (i) (list-item-string-representation i #:show-due-date #t))
+          (make-filter-work-item-to-be-done-on-date day)
+          items)))
+    (if (null? representation)
+        (format #f "There are no items designated for ~a" date-str)
+        (string-append representation "\n"))))
 
 (define (prompt-text)
   (let ((proposed-text (readline "Please enter the text for the work item: ")))
