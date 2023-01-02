@@ -27,3 +27,7 @@
 
 (define-public (colour-scheme-list-item scheme)
   (assoc-ref scheme "list-item"))
+
+(define-public colour-red "\x1b[31m")
+(define-public colour-yellow "\x1b[33m")
+(define-public reset-colours "\x1b[0m")
