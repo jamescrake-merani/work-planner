@@ -110,7 +110,7 @@
                         (add (single-char #\a))
                         (text (value #t)
                               (single-char #\t))
-                        (due (value #t)
+                        (date (value #t)
                              (single-char #\d))
                         (interactive (single-char #\i))
                         (all)

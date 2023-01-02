@@ -8,7 +8,7 @@ work\-planner \- diary planner for work items
 [\fB\-c | \-\-complete \fIitem\-id\fR]
 [\fB\-a | \-\-add\fR]
 [\fB\-t | \-\-text \fItext\fR]
-[\fB\-d | \-\-due \fIdate\fR]
+[\fB\-d | \-\-date \fIdate\fR]
 [\fB\-i | \-\-interactive\fR]
 [\fB\-\-all\fR]
 [\fB\-p | \-\-purge\fR]
@@ -37,8 +37,8 @@ Add a new work item.
 .BR \-t ", " \--text
 Specify the text of the work item being added.
 .TP
-.BR \-d ", " \-\-due
-Specify the due date of the work item being added.
+.BR \-d ", " \-\-date
+The date to be used for due dates, or designation.
 .TP
 .BR \-i ", " \-\-interactive
 work\-planner will prompt for fields on the command line rather than accepting
@@ -56,4 +56,4 @@ Do not ask for confirmation when purging work items
 .TP
 .BR \-\-designated " " \fIitem\-id
 Designated a specifed work\-item to be completed today, or alternatively, on the
-date specified by the due field.
+date specified by the date field.
