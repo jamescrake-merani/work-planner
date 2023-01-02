@@ -134,7 +134,7 @@ P.S: If you want to see all the work items, just do work-planner --all\n"
           (make-filter-work-item-to-be-done-on-date day)
           items)))
     (if (null? representation)
-        (format #f "There are no items designated for ~a" date-str)
+        (format #f "There are no items designated for ~a\n" date-str)
         (item-lines->string representation))))
 
 (define (prompt-text)
