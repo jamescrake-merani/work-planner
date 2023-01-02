@@ -52,7 +52,8 @@
    (cons "id" id)
    (cons "text" text)
    (cons "due-date" due-date)
-   (cons "designated-completion-dates" designated-completion-dates)))
+   (cons "designated-completion-dates" designated-completion-dates)
+   (cons "completed" completed)))
 (export work-item)
 
 (define* (add-work-item-to-lst item items-lst #:optional (id 1))
