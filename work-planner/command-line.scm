@@ -81,7 +81,7 @@
                       colours))
 (export construct-to-be-done-on-date)
 
-(define* (construct-due-in-n-days items #:optional (date (current-date)) (n 7) (colours no-colour-scheme))
+(define* (construct-due-in-n-days items #:optional (date (current-date)) (colours no-colour-scheme) (n 7))
   (get-representation (format #f "Due in the next ~d days:" n)
                       (lambda (i) (list-item-string-representation i #:show-due-date #t #:colours colours))
                       (make-filter-work-due-in-n-days n date)
