@@ -66,7 +66,7 @@
     (save-items!
      (work-item-replace item-to-complete (work-item-complete item-to-complete) items))) )
 
-(define (add-action options items quiet)
+(define (add-action options items quiet designate-today?)
   (let* ((item-text (option-ref options 'text #f))
          (due-str (option-ref options 'due #f))
          (interactive? (option-ref options 'interactive #f)))
@@ -76,7 +76,8 @@
             (if interactive?
                 (interactive-create-work-item)
                 (work-item #:text item-text
-                           #:due-date (if due-str (string->date due-str "~d/~m/~Y") #f))))
+                           #:due-date (if due-str (string->date due-str "~d/~m/~Y") #f)
+                           #:designated-completion-dates (if designate-today? (current-date) #f))))
            (new-work-items-lst (add-work-item-to-lst new-work-item items)))
       (save-items!
        new-work-items-lst)
@@ -130,6 +131,7 @@
   (let* ((option-spec '((complete (value #t)
                                   (single-char #\c))
                         (add (single-char #\a))
+                        (designate-today)
                         (text (value #t)
                               (single-char #\t))
                         (date (value #t)
@@ -147,6 +149,7 @@
          (options (getopt-long args option-spec)))
     (let ((to-complete (option-ref options 'complete #f))
           (to-add (option-ref options 'add #f))
+          (designate-today? (option-ref options 'designate-today #f))
           (show-all (option-ref options 'all #f))
           (designate (option-ref options 'designate #f))
           (purge (option-ref options 'purge #f))
@@ -156,7 +159,7 @@
           (day-to-view (option-ref options 'view-day #f))
           (items (load-work-items)))
       (cond (to-complete (complete-action to-complete items))
-            (to-add (add-action options items quiet))
+            (to-add (add-action options items quiet designate-today?))
             (designate (designate-action options items designate))
             (show-all (display (show-all-items items)))
             (purge (purge-work-items! options items))
