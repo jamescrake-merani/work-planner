@@ -20,7 +20,11 @@
 
 ;;FIXME: Assumes that this dir already exists.
 (define items-dir
-  (string-join (list (string-append file-name-separator-string "home") (getlogin) ".local" "share" "work-planner" ) file-name-separator-string))
+  (string-join
+   (list (string-append file-name-separator-string "home")
+         (getlogin)
+         ".local" "share" "work-planner" )
+   file-name-separator-string))
 (use-modules (work-planner command-line)
              (work-planner date-json)
              (ice-9 textual-ports)
