@@ -53,12 +53,14 @@
 
 (define* (list-item-string-representation item
                                           #:key show-due-date
-                                          (date-format 'default))
-  "Represents each work item as a list item (with a '-' before it)"
-  (string-append "- " (work-item-string-representation
+                                          (date-format 'default)
+                                          (colours no-colour-scheme))
+  "Represents each work item as a list item (with a '-' before it) and colours"
+  (string-append (colour-scheme-list-item colours) "- " (work-item-string-representation
                        item
                        #:show-due-date show-due-date
-                       #:date-format date-format)))
+                       #:date-format date-format)
+                 reset-colours))
 (export list-item-string-representation )
 
 (define (get-representation beginning-text representation-func items-filter items colours)
@@ -73,7 +75,7 @@
 ;; printed onto the screen
 (define* (construct-to-be-done-on-date items #:optional (date (current-date)) (colours no-colour-scheme))
   (get-representation "To be done today:"
-                      list-item-string-representation
+                      (lambda (i) (list-item-string-representation i #:show-due-date #t #:colours colours))
                       (make-filter-work-item-to-be-done-on-date date)
                       items
                       colours))
@@ -81,7 +83,7 @@
 
 (define* (construct-due-in-n-days items #:optional (date (current-date)) (n 7) (colours no-colour-scheme))
   (get-representation (format #f "Due in the next ~d days:" n)
-                      (lambda (i) (list-item-string-representation i #:show-due-date #t))
+                      (lambda (i) (list-item-string-representation i #:show-due-date #t #:colours colours))
                       (make-filter-work-due-in-n-days n date)
                       items
                       colours))
@@ -89,7 +91,7 @@
 
 (define* (construct-all-items items #:optional colours)
   (get-representation "All work items: "
-                      (lambda (i) (list-item-string-representation i #:show-due-date #t))
+                      (lambda (i) (list-item-string-representation i #:show-due-date #t #:colours colours))
                       identity
                       (sort items (lambda (y x) (< (work-item-id y) (work-item-id x))))
                       colours))
@@ -97,7 +99,7 @@
 
 (define* (construct-overdue items #:optional (date (current-date)) (colours no-colour-scheme))
   (get-representation  "OVERDUE!!:"
-                       (lambda (i) (list-item-string-representation i #:show-due-date #t))
+                       (lambda (i) (list-item-string-representation i #:show-due-date #t #:colours colours))
                        (make-filter-work-overdue date)
                        items
                        colours))
@@ -105,7 +107,7 @@
 
 (define* (construct-undesignated items #:optional (date (current-date)) (colours no-colour-scheme))
   (get-representation "The following items have not been designated:"
-                      (lambda (i) (list-item-string-representation i #:show-due-date #t))
+                      (lambda (i) (list-item-string-representation i #:show-due-date #t #:colours colours))
                       (make-filter-undesignated date)
                       items
                       colours))
