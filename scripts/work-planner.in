@@ -72,7 +72,7 @@
 
 (define (add-action options items quiet designate-today?)
   (let* ((item-text (option-ref options 'text #f))
-         (due-str (option-ref options 'due #f))
+         (due-str (option-ref options 'date #f))
          (interactive? (option-ref options 'interactive #f)))
     (if (and (not item-text) (not interactive?))
         (throw 'work-planner-error "You cannot create a work item without text.")) ;; TODO: Will not have an error return code.
@@ -110,7 +110,7 @@
 
 (define (edit-item! options id-str items) ;; Using the 'unchanged symbol because #f means something else in this context.
   (let ((id (string->number id-str)))
-    (let ((date-str (option-ref options 'due 'unchanged))
+    (let ((date-str (option-ref options 'date 'unchanged))
           (new-text (option-ref options 'text 'unchanged))
           (old-item (get-work-item items id)))
       (let ((new-item (work-item
