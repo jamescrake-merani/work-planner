@@ -75,7 +75,7 @@
          (due-str (option-ref options 'due #f))
          (interactive? (option-ref options 'interactive #f)))
     (if (and (not item-text) (not interactive?))
-        (format #t "You cannot create a work item without text.~%")) ;; TODO: Will not have an error return code.
+        (throw 'work-planner-error "You cannot create a work item without text.")) ;; TODO: Will not have an error return code.
     (let* ((new-work-item
             (if interactive?
                 (interactive-create-work-item)
@@ -132,7 +132,10 @@
 
 ;; FIXME: There is no error handling here.
 (define (main args)
-  (let* ((option-spec '((complete (value #t)
+  (catch
+    'work-planner-error
+    (lambda ()
+      (let* ((option-spec '((complete (value #t)
                                   (single-char #\c))
                         (add (single-char #\a))
                         (designate-today)
@@ -171,3 +174,5 @@
             (to-delete (delete-item! options to-delete items))
             (day-to-view (action-view-day options day-to-view items))
             (else (display (summary-screen items)))))))
+    (lambda (key . args)
+      (format #t "~a~%" (car args)))))
