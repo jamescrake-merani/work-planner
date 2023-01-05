@@ -3,17 +3,10 @@
 .SH NAME
 work\-planner \- diary planner for work items
 
-.SH SYNOPOSIS
+.SH SYNOPSIS
 .B work\-planner
-[\fB\-c | \-\-complete \fIitem\-id\fR]
-[\fB\-a | \-\-add\fR]
-[\fB\-t | \-\-text \fItext\fR]
-[\fB\-d | \-\-date \fIdate\fR]
-[\fB\-i | \-\-interactive\fR]
-[\fB\-\-all\fR]
-[\fB\-p | \-\-purge\fR]
-[\fB\-y | \-\-no\-confirm\fR]
-[\fB\-\-designate \fIitem\-id\fR]
+[\fI command \fR]
+[\fI parameters ]
 
 .SH DESCRIPTION
 .B work\-planner
