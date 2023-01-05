@@ -102,11 +102,11 @@
   (let ((no-confirm (option-ref options 'no-confirm #f))
         (new-items (purge-work-items items)))
     (let ((length-new-items (- (length items) (length new-items))))
-      (if (= length-new-items 0)
-          (format #t "There are no items to purge.~%")
-          (if (or no-confirm (string=? (string-upcase (readline (format #f "Are you sure you want to purge ~d items? (y/N): " length-new-items))) "Y"))
-              (save-items! new-items)
-              (format #t "No work items have been purged.~%"))))))
+      (when (= length-new-items 0)
+          (throw 'work-planner-error  "There are no items to purge."))
+      (if (or no-confirm (string=? (string-upcase (readline (format #f "Are you sure you want to purge ~d items? (y/N): " length-new-items))) "Y"))
+          (save-items! new-items)
+          (format #t "No work items have been purged.~%")))))
 
 (define (edit-item! options id-str items) ;; Using the 'unchanged symbol because #f means something else in this context.
   (let ((id (string->number id-str)))
