@@ -64,11 +64,19 @@
           (create-empty-work-items-file items-dir)
           (load-work-items)))))
 
+(define (complete-items-action! items to-complete) ;;TODO: Perhaps this could be replaced with fold?
+  (letrec ((complete-iter (lambda (current-work-items remaining)
+                            (if (null? remaining)
+                                current-work-items
+                                (complete-iter
+                                 (complete-action (car remaining) current-work-items)
+                                 (cdr remaining))))))
+    (save-items! (complete-iter items to-complete))))
+
 (define (complete-action to-complete items)
   (let* ((to-complete-int (string->number to-complete))
          (item-to-complete (find (lambda (i) (= (assoc-ref i "id") to-complete-int)) items)))
-    (save-items!
-     (work-item-replace item-to-complete (work-item-complete item-to-complete) items))) )
+    (work-item-replace item-to-complete (work-item-complete item-to-complete) items)))
 
 (define (add-action options items quiet designate-today?)
   (let* ((item-text (option-ref options 'text #f))
@@ -174,7 +182,7 @@
               (day-to-view (option-ref options 'view-day #f))
               (non-option-args (option-ref options '() '()))
               (items (load-work-items)))
-          (cond (to-complete (complete-action to-complete items))
+          (cond (to-complete (complete-items-action! items (cons to-complete non-option-args)))
                 (to-add (add-action options items quiet designate-today?))
                 (designate (designate-items-action! options items (cons designate non-option-args)))
                 (show-all (display (show-all-items items)))
