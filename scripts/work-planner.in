@@ -91,7 +91,7 @@
         ;; list. This will break if that behaviour ever changes!
         (format #t "Work item created with id [~d]~%" (work-item-id (car new-work-items-lst)))))))
 
-(define (designate-actions! options items items-to-designate)
+(define (designate-items-action! options items items-to-designate)
   (letrec ((designate-iter (lambda (current-work-items to-designate)
                           (if (null? to-designate)
                               current-work-items
@@ -176,7 +176,7 @@
               (items (load-work-items)))
           (cond (to-complete (complete-action to-complete items))
                 (to-add (add-action options items quiet designate-today?))
-                (designate (designate-actions! options items (cons designate non-option-args)))
+                (designate (designate-items-action! options items (cons designate non-option-args)))
                 (show-all (display (show-all-items items)))
                 (purge (purge-work-items! options items))
                 (to-edit (edit-item! options to-edit items))
