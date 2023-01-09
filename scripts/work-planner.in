@@ -91,12 +91,20 @@
         ;; list. This will break if that behaviour ever changes!
         (format #t "Work item created with id [~d]~%" (work-item-id (car new-work-items-lst)))))))
 
+(define (designate-actions! options items items-to-designate)
+  (letrec ((designate-iter (lambda (current-work-items to-designate)
+                          (if (null? to-designate)
+                              current-work-items
+                              (designate-iter
+                               (designate-action options current-work-items (car to-designate))
+                               (cdr to-designate))))))
+    (save-items! (designate-iter items items-to-designate)))) ;;TODO: Might rename.
+
 (define (designate-action options items designate)
   (let* ((date-str (option-ref options 'date #f)) ;;TODO: Perhaps create a seperate date field.
          (desig-date (if date-str (string->date date-str "~d/~m/~Y") (current-date)))
          (old-work-item (get-work-item items (string->number designate))))
-    (save-items!
-     (work-item-replace old-work-item (designate-work-item-date old-work-item desig-date) items))))
+    (work-item-replace old-work-item (designate-work-item-date old-work-item desig-date) items)))
 
 (define (purge-work-items! options items)
   (let ((no-confirm (option-ref options 'no-confirm #f))
@@ -164,10 +172,11 @@
               (to-delete (option-ref options 'delete #f))
               (quiet (option-ref options 'quiet #f))
               (day-to-view (option-ref options 'view-day #f))
+              (non-option-args (option-ref options '() '()))
               (items (load-work-items)))
           (cond (to-complete (complete-action to-complete items))
                 (to-add (add-action options items quiet designate-today?))
-                (designate (designate-action options items designate))
+                (designate (designate-actions! options items (cons designate non-option-args)))
                 (show-all (display (show-all-items items)))
                 (purge (purge-work-items! options items))
                 (to-edit (edit-item! options to-edit items))
