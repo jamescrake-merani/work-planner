@@ -25,9 +25,12 @@
    (= (date-month date1) (date-month date2))
    (= (date-year date1) (date-year date2))))
 
-(define-public (days-between-dates date1 date2)
-  (apply -
-         (map date->julian-day (list date1 date2))))
+(define* (days-between-dates date1 date2 #:optional truncate?)
+  (let* ((dates-lst (list date1 date2))
+         (julian-days-lst (map date->julian-day dates-lst))
+         (dates-truncated (if truncate? (map truncate julian-days-lst) julian-days-lst)))
+    (apply - dates-truncated)))
+(export days-between-dates)
 
 (define-public (is-midnight? d)
   (and
@@ -37,5 +40,5 @@
 
 (define* (past-date? date1 date2 #:optional (inclusive #t))
   (let ((comparer (if inclusive >= >)))
-    (comparer (truncate (days-between-dates date1 date2)) 0)))
+    (comparer (days-between-dates date1 date2 #t) 0)))
 (export past-date?)
