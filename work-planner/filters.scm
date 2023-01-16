@@ -48,7 +48,7 @@
   (lambda (item)
     (let ((designated-completion (work-item-designated-completion-dates item)))
       (and (not (work-item-completed? item))
-           (or  (not designated-completion) (past-date? from designated-completion #f))))))
+           (or  (not designated-completion) (past-date? from designated-completion))))))
 (export make-filter-undesignated)
 
 (define-public (filter-no-to-be-done-date item)
