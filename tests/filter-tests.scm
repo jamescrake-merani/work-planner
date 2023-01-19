@@ -1,6 +1,7 @@
 (use-modules (srfi srfi-64)
              (srfi srfi-19)
-             (work-planner filters))
+             (work-planner filters)
+             (work-planner date-json))
 
 (define base-date (string->date "15/1/2023" "~d/~m/~Y"))
 
@@ -29,6 +30,10 @@
     (cons "designated-completion-dates" (make-date 0 0 0 13 20 11 2022 0))
     (cons "completed" #f))))
 
+(define (create-test-data items)
+  (map (lambda (item iteration)
+         (cons (cons "id" iteration) item))
+       items (iota (length items) 1)))
 (test-begin "filter-tests")
 
 (test-equal
