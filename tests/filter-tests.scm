@@ -2,6 +2,12 @@
              (srfi srfi-19)
              (work-planner filters))
 
+(define base-date (string->date "15/1/2023" "~d/~m/~Y"))
+
+(define (after-base-date days)
+  "Add DAYS to the base date."
+  (julian-day->date (+ (date->julian-day days) days)))
+
 (define test-items
   (list
    (list
