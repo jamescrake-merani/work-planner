@@ -34,6 +34,46 @@
   (map (lambda (item iteration)
          (cons (cons "id" iteration) item))
        items (iota (length items) 1)))
+
+(create-test-data
+ (list
+  (work-item
+   #:text "Designated Today"
+   #:designated-completion-dates base-date)
+  (work-item
+   #:text "Designated Yesterday"
+   #:designated-completion-dates (after-base-date -1))
+  (work-item
+   #:text "Designated 3 days ago"
+   #:designated-completion-dates (after-base-date -3))
+  (work-item
+   #:text "Due in 2 days"
+   #:due-date (after-base-date 2))
+  (work-item
+   #:text "Due in 4 days"
+   #:due-date (after-base-date 4))
+  (work-item
+   #:text "Due in 7 days"
+   #:due-date (after-base-date 7))
+  (work-item
+   #:text "Due in 8 days"
+   #:due-date (after-base-date 8))
+  (work-item
+   #:text "Due in 10 days"
+   #:due-date (after-base-date 10))
+  (work-item
+   #:text "Completed Today"
+   #:completed base-date)
+  (work-item
+   #:text "Completed Yesterday"
+   #:completed (after-base-date -1))
+  (work-item
+   #:text "Completed due tomorrow"
+   #:due-date (after-base-date 1))
+  (work-item
+   #:text "Completed due yesterday"
+   #:due-date (after-base-date -1))))
+
 (test-begin "filter-tests")
 
 (test-equal
