@@ -64,5 +64,5 @@
       (not
        (and
         (and (work-item-completed? item) (not (same-day? today due-date))
-             (or (not due-date) (past-date? today due-date)))))))
+             (or (not due-date) (past-date? today due-date))))))))
 (export make-filter-purgable)
