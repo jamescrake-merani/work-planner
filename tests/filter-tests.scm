@@ -8,7 +8,7 @@
 
 (define (after-base-date days)
   "Add DAYS to the base date."
-  (julian-day->date (+ (date->julian-day days) days)))
+  (julian-day->date (+ (date->julian-day base-date) days)))
 
 (define (create-test-data items)
   (map (lambda (item iteration)
