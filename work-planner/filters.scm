@@ -61,5 +61,5 @@
 (define* (make-filter-purgable #:optional (today (current-date)))
   (lambda (item)
     (let ((due-date (work-item-due-date item)))
-      (not (and (work-item-completed? item) (or (not due-date) (past-date? today due-date)))))))
+      (not (and (work-item-completed? item) (or (not due-date) (past-date? today due-date #f)))))))
 (export make-filter-purgable)
