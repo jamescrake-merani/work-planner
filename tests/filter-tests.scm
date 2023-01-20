@@ -84,7 +84,7 @@
 
 (test-equal
     ;; Reminder that this list is what has NOT being purged
-    (map (cut list-ref test-items <>) '(0 1 2 3 4 5 6 7 8 9 11))
+    (map (cut list-ref test-items <>) '(0 1 2 3 4 5 6 7 8 9 11 12))
   (filter (make-filter-purgable base-date) test-items))
 
 (test-end "filter-tests")
