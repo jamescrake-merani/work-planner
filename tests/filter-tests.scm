@@ -60,19 +60,31 @@
 (test-begin "filter-tests")
 
 (test-equal
-    (list (list-ref test-items 0) (list-ref test-items 2))
-  (filter (make-filter-work-item-to-be-done-on-date (make-date 0 0 0 15 20 11 2022 0)) test-items))
+    (map (cut list-ref test-items <>) '(0))
+  (filter (make-filter-work-item-to-be-done-on-date base-date) test-items))
 
 (test-equal
-    (list (list-ref test-items 0) (list-ref test-items 1))
-  (filter (make-filter-work-due-in-n-days 5 (make-date 0 0 0 22 18 11 2022 0)) test-items))
+    (map (cut list-ref test-items <>) '(3 4 5))
+  (filter (make-filter-work-due-in-n-days 7 base-date) test-items))
 
 (test-equal
-    (list (list-ref test-items 0) (list-ref test-items 1))
+    (map (cut list-ref test-items <>) '(0 1))
   (filter (make-filter-work-overdue (make-date 0 0 0 22 23 11 2022 0)) test-items))
 
-(test-equal ;;TODO: Should probably add another test-item for this
-    (list (list-ref test-items 1))
-  (filter filter-no-to-be-done-date test-items))
+(test-equal
+    (map (cut list-ref test-items <>) '(3 4 5))
+  (filter (make-filter-work-overdue (after-base-date 7)) test-items))
+
+(test-equal
+    (map (cut list-ref test-items <>) '(1 2 3 4 5 6 7 8))
+  (filter (make-filter-undesignated base-date) test-items))
+
+(test-equal
+    (map (cut list-ref test-items <>) '(0 1 2 9 10 11 12))
+  (filter filter-no-due-date test-items))
+
+(test-equal
+    (map (cut list-ref test-items <>) '(10 12))
+  (filter (make-filter-purgable base-date) test-items))
 
 (test-end "filter-tests")
