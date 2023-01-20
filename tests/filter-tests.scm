@@ -42,6 +42,9 @@
      #:text "Due in 10 days"
      #:due-date (after-base-date 10))
     (work-item
+     #:text "Due in 14 days"
+     #:due-date (after-base-date 14))
+    (work-item
      #:text "Completed Today"
      #:completed base-date)
     (work-item
