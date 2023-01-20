@@ -79,7 +79,7 @@
   (filter (make-filter-undesignated base-date) test-items))
 
 (test-equal
-    (map (cut list-ref test-items <>) '(0 1 2 9 10 11 12))
+    (map (cut list-ref test-items <>) '(0 1 2 9 10))
   (filter filter-no-due-date test-items))
 
 (test-equal
