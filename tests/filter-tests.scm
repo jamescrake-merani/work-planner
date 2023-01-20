@@ -1,5 +1,6 @@
 (use-modules (srfi srfi-64)
              (srfi srfi-19)
+             (srfi srfi-26)
              (work-planner filters)
              (work-planner date-json))
 
