@@ -53,10 +53,12 @@
      #:completed (after-base-date -1))
     (work-item
      #:text "Completed due tomorrow"
-     #:due-date (after-base-date 1))
+     #:due-date (after-base-date 1)
+     #:completed base-date)
     (work-item
      #:text "Completed due yesterday"
-     #:due-date (after-base-date -1)))))
+     #:due-date (after-base-date -1)
+     #:completed base-date))))
 
 (test-begin "filter-tests")
 
