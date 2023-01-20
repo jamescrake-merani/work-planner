@@ -9,70 +9,50 @@
   "Add DAYS to the base date."
   (julian-day->date (+ (date->julian-day days) days)))
 
-(define test-items
-  (list
-   (list
-    (cons "id" 1)
-    (cons "text" "Placeholder value 1")
-    (cons "due-date" (make-date 0 0 0 10 22 11 2022 0))
-    (cons "designated-completion-dates" (make-date 0 0 0 15 20 11 2022 0))
-    (cons "completed" #f))
-   (list
-    (cons "id" 2)
-    (cons "text" "Placeholder value 2")
-    (cons "due-date" (make-date 0 0 0 22 19 11 2022 0))
-    ;; No designated completion date
-    (cons "completed" #f))
-   (list
-    (cons "id" 3)
-    (cons "text" "Placeholder value 3")
-    (cons "due-date" (make-date 0 0 0 6 29 11 2022 0))
-    (cons "designated-completion-dates" (make-date 0 0 0 13 20 11 2022 0))
-    (cons "completed" #f))))
-
 (define (create-test-data items)
   (map (lambda (item iteration)
          (cons (cons "id" iteration) item))
        items (iota (length items) 1)))
 
-(create-test-data
- (list
-  (work-item
-   #:text "Designated Today"
-   #:designated-completion-dates base-date)
-  (work-item
-   #:text "Designated Yesterday"
-   #:designated-completion-dates (after-base-date -1))
-  (work-item
-   #:text "Designated 3 days ago"
-   #:designated-completion-dates (after-base-date -3))
-  (work-item
-   #:text "Due in 2 days"
-   #:due-date (after-base-date 2))
-  (work-item
-   #:text "Due in 4 days"
-   #:due-date (after-base-date 4))
-  (work-item
-   #:text "Due in 7 days"
-   #:due-date (after-base-date 7))
-  (work-item
-   #:text "Due in 8 days"
-   #:due-date (after-base-date 8))
-  (work-item
-   #:text "Due in 10 days"
-   #:due-date (after-base-date 10))
-  (work-item
-   #:text "Completed Today"
-   #:completed base-date)
-  (work-item
-   #:text "Completed Yesterday"
-   #:completed (after-base-date -1))
-  (work-item
-   #:text "Completed due tomorrow"
-   #:due-date (after-base-date 1))
-  (work-item
-   #:text "Completed due yesterday"
-   #:due-date (after-base-date -1))))
+(define test-items
+  (create-test-data
+   (list
+    (work-item
+     #:text "Designated Today"
+     #:designated-completion-dates base-date)
+    (work-item
+     #:text "Designated Yesterday"
+     #:designated-completion-dates (after-base-date -1))
+    (work-item
+     #:text "Designated 3 days ago"
+     #:designated-completion-dates (after-base-date -3))
+    (work-item
+     #:text "Due in 2 days"
+     #:due-date (after-base-date 2))
+    (work-item
+     #:text "Due in 4 days"
+     #:due-date (after-base-date 4))
+    (work-item
+     #:text "Due in 7 days"
+     #:due-date (after-base-date 7))
+    (work-item
+     #:text "Due in 8 days"
+     #:due-date (after-base-date 8))
+    (work-item
+     #:text "Due in 10 days"
+     #:due-date (after-base-date 10))
+    (work-item
+     #:text "Completed Today"
+     #:completed base-date)
+    (work-item
+     #:text "Completed Yesterday"
+     #:completed (after-base-date -1))
+    (work-item
+     #:text "Completed due tomorrow"
+     #:due-date (after-base-date 1))
+    (work-item
+     #:text "Completed due yesterday"
+     #:due-date (after-base-date -1)))))
 
 (test-begin "filter-tests")
 
