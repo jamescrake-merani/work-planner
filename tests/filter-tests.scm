@@ -6,9 +6,21 @@
 
 (define base-date (string->date "15/1/2023" "~d/~m/~Y"))
 
-(define (after-base-date days)
+(define* (after-base-date days #:optional (hours 0) (minutes 0))
   "Add DAYS to the base date."
-  (julian-day->date (+ (date->julian-day base-date) days)))
+  (let ((date-just-day (julian-day->date (+ (date->julian-day base-date) days))))
+    (if (or (= hours 0) (= minutes 0))
+        date-just-day
+        (make-date
+         0
+         0
+         minutes
+         hours
+         (date-day date-just-day)
+         (date-month date-just-day)
+         (date-year date-just-day)
+         0)))
+  )
 
 (define (create-test-data items)
   (map (lambda (item iteration)
