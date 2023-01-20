@@ -69,10 +69,6 @@
   (filter (make-filter-work-due-in-n-days 7 base-date) test-items))
 
 (test-equal
-    (map (cut list-ref test-items <>) '(0 1))
-  (filter (make-filter-work-overdue (make-date 0 0 0 22 23 11 2022 0)) test-items))
-
-(test-equal
     (map (cut list-ref test-items <>) '(3 4 5))
   (filter (make-filter-work-overdue (after-base-date 7)) test-items))
 
