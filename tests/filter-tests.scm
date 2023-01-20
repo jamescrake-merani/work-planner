@@ -65,7 +65,7 @@
   (filter (make-filter-work-item-to-be-done-on-date base-date) test-items))
 
 (test-equal
-    (map (cut list-ref test-items <>) '(3 4 5))
+    (map (cut list-ref test-items <>) '(3 4 5 11))
   (filter (make-filter-work-due-in-n-days 7 base-date) test-items))
 
 (test-equal
