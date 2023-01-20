@@ -58,7 +58,8 @@
   (not (work-item-due-date item)))
 
 ;; TODO: What counts as purgable should be configurable.
-(define* (filter-purgable item #:optional (today (current-date)))
-  (let ((due-date (work-item-due-date item)))
-    (not (and (work-item-completed? item) (or (not due-date) (past-date? today due-date))))))
-(export filter-purgable)
+(define* (make-filter-purgable #:optional (today (current-date)))
+  (lambda (item)
+    (let ((due-date (work-item-due-date item)))
+      (not (and (work-item-completed? item) (or (not due-date) (past-date? today due-date)))))))
+(export make-filter-purgable)

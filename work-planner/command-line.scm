@@ -175,4 +175,4 @@ P.S: If you want to see all the work items, just do work-planner --all\n"
    #:due-date (prompt-due-date)))
 
 (define-public (purge-work-items items)
-  (filter filter-purgable items))
+  (filter (make-filter-purgable) items))
