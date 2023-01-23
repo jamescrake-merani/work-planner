@@ -17,15 +17,20 @@
 (define-module (work-planner colours))
 
 (define* (colour-scheme #:key header list-item)
+  "Create a new colour scheme. All arguments are optional:
+HEADER is the colour of the header of each collection.
+LIST-ITEM is the colour applied to individual list items."
   (list
    (cons "header" header)
    (cons "list-item" list-item)))
 (export colour-scheme)
 
 (define-public (colour-scheme-header scheme)
+  "Returns the header of SCHEME."
   (assoc-ref scheme "header"))
 
 (define-public (colour-scheme-list-item scheme)
+  "Returns the colour of list items in SCHEME."
   (assoc-ref scheme "list-item"))
 
 (define-public colour-red "\x1b[31m")
