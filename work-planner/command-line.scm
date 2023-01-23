@@ -141,7 +141,7 @@ P.S: If you want to see all the work items, just do work-planner --all\n"
          (get-representation
           (format #f "The items designated for ~a are:" date-str)
           (lambda (i) (list-item-string-representation i #:show-due-date #t #:colours default-colour-scheme))
-          (make-filter-work-item-to-be-done-on-date day)
+          (make-filter-designated-on day)
           items
           default-colour-scheme)))
     (if (null? representation)
