@@ -72,31 +72,35 @@
      #:due-date (after-base-date -1)
      #:completed base-date))))
 
+(define (take-indexes lst indexes)
+  "Create a new list where items are taken from LST with given INDEXES."
+  (map (cut list-ref lst <>) indexes))
+
 (test-begin "filter-tests")
 
 (test-equal
-    (map (cut list-ref test-items <>) '(0))
+    (take-indexes test-items '(0))
   (filter (make-filter-designated-on base-date) test-items))
 
 (test-equal
-    (map (cut list-ref test-items <>) '(3 4 5 11))
+    (take-indexes test-items '(3 4 5 11))
   (filter (make-filter-work-due-in-n-days 7 base-date) test-items))
 
 (test-equal
-    (map (cut list-ref test-items <>) '(3 4 5))
+    (take-indexes test-items '(3 4 5))
   (filter (make-filter-work-overdue (after-base-date 7)) test-items))
 
 (test-equal
-    (map (cut list-ref test-items <>) '(1 2 3 4 5 6 7 8))
+    (take-indexes test-items '(1 2 3 4 5 6 7 8))
   (filter (make-filter-undesignated base-date) test-items))
 
 (test-equal
-    (map (cut list-ref test-items <>) '(0 1 2 9 10))
+    (take-indexes test-items '(0 1 2 9 10))
   (filter filter-no-due-date test-items))
 
 (test-equal
     ;; Reminder that this list is what has NOT being purged
-    (map (cut list-ref test-items <>) '(0 1 2 3 4 5 6 7 8 9 11 12))
+    (take-indexes test-items '(0 1 2 3 4 5 6 7 8 9 11 12))
   (filter (make-filter-purgable base-date) test-items))
 
 (test-end "filter-tests")
