@@ -76,7 +76,7 @@
 (define* (construct-to-be-done-on-date items #:optional (date (current-date)) (colours no-colour-scheme))
   (get-representation "To be done today:"
                       (lambda (i) (list-item-string-representation i #:show-due-date #t #:colours colours))
-                      (make-filter-work-item-to-be-done-on-date date)
+                      (make-filter-designated-on date)
                       items
                       colours))
 (export construct-to-be-done-on-date)

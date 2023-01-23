@@ -76,7 +76,7 @@
 
 (test-equal
     (map (cut list-ref test-items <>) '(0))
-  (filter (make-filter-work-item-to-be-done-on-date base-date) test-items))
+  (filter (make-filter-designated-on base-date) test-items))
 
 (test-equal
     (map (cut list-ref test-items <>) '(3 4 5 11))

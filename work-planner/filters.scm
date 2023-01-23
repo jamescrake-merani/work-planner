@@ -22,8 +22,7 @@
 ;; These functions are designed to be called with the filter
 ;; function.
 
-;; FIXME: Very long winded title. Can this be reduced?
-(define-public (make-filter-work-item-to-be-done-on-date date)
+(define-public (make-filter-designated-on date)
   (lambda (item)
     (same-day? (work-item-designated-completion-dates item) date)))
 
