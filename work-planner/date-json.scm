@@ -22,6 +22,7 @@
 ;; deserialise dates from the SRFI-19 module to, and from JSON.
 
 (define-public (a-list->date a-lst)
+  "Converts the association list A-LST to an equivalent SRFI-19 date"
   (if a-lst
       (make-date
        (assoc-ref a-lst "nsecs")
@@ -35,6 +36,7 @@
       #f))
 
 (define-public (date->a-list date)
+  "Converts the SRFI-19 DATE to an equivalent assocation list."
   (if date
       (list
        (cons "nsecs" (date-nanosecond date))
@@ -48,6 +50,11 @@
       #f))
 
 (define* (work-item #:key id text due-date designated-completion-dates completed)
+  "Creates a new work item. All parameters are optional:
+ID: The unique identifier for the item
+DUE-DATE: The date at which the new work item will be due.
+DESIGNATED-COMPLETION-DATES: The dates that the work item has been designated
+for completion "
   (list
    (cons "id" id)
    (cons "text" text)
@@ -66,6 +73,8 @@
 ;; TODO: Right now designated completion dates is being used like a single
 ;; value but I think its meant to be a list
 (define-public (work-item-fix-date item)
+  "After items are loaded from JSON, dates will appear as association lists. This
+function converts the dates in ITEM to srfi-19 dates"
   (append (list (cons "due-date" (a-list->date (assoc-ref item "due-date")))
                 (cons "designated-completion-dates" (a-list->date (assoc-ref item "designated-completion-dates")))
                 (cons "completed" (if (assoc-ref item "completed") (a-list->date (assoc-ref item "completed")) #f)))
@@ -73,27 +82,36 @@
 ;; TODO: These two functions are so similar that they can probably be combined
 ;; into one.
 (define-public (work-item-dates-assoc item)
+  "Converts the dates in ITEM from srfi-19 dates to association lists."
   (append (list (cons "due-date" (date->a-list (assoc-ref item "due-date")))
                 (cons "designated-completion-dates" (date->a-list (assoc-ref item "designated-completion-dates")))
                 (cons "completed" (date->a-list (assoc-ref item "completed"))))
           (alist-delete "completed" (alist-delete "due-date" (alist-delete "designated-completion-dates" item)))))
 
 (define-public (json-string->work-item str)
+  "Converts STR with JSON to a work item association list."
   (work-item-fix-date (vector->list (json-string->scm str))))
 
 (define-public (work-item->json-string item)
+  "Converts ITEM into a string with JSON."
   (scm->json-string (work-item-dates-assoc item)))
 
 (define-public (json-string->work-items str)
+  "Converts STR containing JSON of a collection of work items into a list of work
+items all represented as association lists"
   (map work-item-fix-date (vector->list (json-string->scm str))))
 
 (define-public (work-items->json-string items)
+  "Converts ITEMS, which is a list of work items all represented as association
+lists into JSON of a collection of the same of work items."
   (scm->json-string (list->vector (map work-item-dates-assoc items))))
 
 ;; A work item does not have to have all these fields - the caller
 ;; can expect a #f value if the field doesn't exist. However, callers
 ;; may assume certain fields exist, and will of course error when they
 ;; don't.
+;;
+;; See documentation of the work-item function for descriptions of all the field
 
 (define-public (work-item-id item)
   (assoc-ref item "id"))
@@ -117,14 +135,18 @@
   (let ((new-value (if (assoc-ref item "completed") #f (current-date))))
     (cons (cons "completed" new-value) (alist-delete "completed" item))))
 
-;; NOTE: Selection is based on id therefore id must be unique!
 (define-public (work-item-replace old-item new-item items)
+  "Replace OLD-ITEM in ITEMS with NEW-ITEM. The comparison is done via the id
+value of the association list therefore each work item in ITEMS must have a
+unique id."
   (cons new-item
         (filter (lambda (i)
                   (not (= (work-item-id i) (work-item-id old-item)))) items)))
 
 (define-public (designate-work-item-date item date)
+  "Designate ITEM to be completed on DATE."
   (cons (cons "designated-completion-dates" date) (alist-delete "designated-completion-dates" item)))
 
 (define-public (get-work-item items id)
+  "Get a work item in ITEMS based on ID."
   (find (lambda (item) (= (work-item-id item) id)) items))
