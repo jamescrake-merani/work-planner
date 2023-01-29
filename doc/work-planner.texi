@@ -4,10 +4,8 @@
 @c %**start of header
 @setfilename work-planer.info
 @documentencoding UTF-8
-@settitle Work-Planer Reference Manual
+@settitle Work Planner Reference Manual
 @c %**end of header
-
-@include version.texi
 
 @copying
 Copyright @copyright{} 2022 James Crake-Merani
@@ -20,41 +18,141 @@ copy of the license is included in the section entitled ``GNU Free
 Documentation License''.
 @end copying
 
-@dircategory The Algorithmic Language Scheme
-@direntry
-* Work-Planer: (work-planer).   
-@end direntry
-
 @titlepage
-@title The Work-Planer Manual
+@title The Work Planer Manual
 @author James Crake-Merani
 
 @page
 @vskip 0pt plus 1filll
-Edition @value{EDITION} @*
-@value{UPDATED} @*
-
 @insertcopying
 @end titlepage
 
 @contents
 
-@c *********************************************************************
 @node Top
-@top Work-Planer
+@top Work Planner
 
-This document describes Work-Planer version @value{VERSION}.
+This is the manual for the Work Planner program. It will describe what it is, how to use it, and documentation on how it is implemented.
+
+Work Planner is designed as a planner for keeping track of all your 'work items', and allowing you to choose when you want to complete these work items. I created to help me organise my work, and days better. It is not designed to be a drop in replacement for a calendar but rather can complement one by providing a systme which is less oriented around events but work.
 
 @menu
-* Introduction::                Why Work-Planer?
+* Work Items:: What are the fields in a work item, and how are they organised
+* Using the command line interface:: How to use the command line work planner interfaced that is supplied with this distribution.
+* Implementation:: How work planner is implemented.
 @end menu
 
-@c *********************************************************************
-@node Introduction
-@chapter Introduction
+@node Work Items
+@chapter Work Items
 
-INTRODUCTION HERE
+Each work item has the following properties.
+@itemize @bullet
+@item
+A unique identifier which is primarily used on the command line to identify, and assign new properties to a specific item.
 
-This documentation is a stub.
+@item
+Some text for the item to describe what it is e.g. 'write up report', or 'finish project'.
+
+@item
+A due date for the item, representing a date by which the work item should be completed.
+
+@item
+A date for when the item is 'designated' to be completed. This is the day that you intend to complete the work item. It does not have to be set in stone; you can move the designated day whenever you want to, and it will remain separate to the ectual due date. Furthermore, if a certain work item does not have a designated day, or it does but it is a date in the past, then this work item will show up on the summary screen. @xref{Summary Screen}
+
+@item
+Whether, or not the item has been completed, and if it has then the date it was completed is also stored in this field.
+
+@end itemize
+
+All dates can also include a time as well. If a time is not specified, the default is always midnight.
+
+@node Using the command line interface
+@chapter Using the command line interface
+
+The command line will normally be invoked on the terminal by running @command{work-planner}.
+
+The program comes with a quick reference of all the options in its man page (access this by running @command{man work-planner}).
+
+@menu
+* Summary Screen:: Viewing the summary screen.
+* Creating and Designating Items:: Creating new work items, and designating them.
+* Purging:: Purging work items.
+@end menu
+
+@node Summary Screen
+@section Summary Screen
+
+When just running the command with no arguments, you will be presented with the summary screen. This is to present with what should be most relevant to you. At present, it includes:
+
+@itemize @bullet
+
+@item
+Items designated to be completed today.
+
+@item
+Items due in the next 7 days.
+
+@item
+Items that are overdue (past their due date).
+
+@item
+Items that are undesignated (have no future designated date).
+
+@end itemize
+
+The above headings will not appear if there is nothing to show underneath them. For example, if no work items are due in the next 7 days, you will not see the heading for it.
+
+@node Creating and Designating Items
+@section Creating and Designating Items
+
+Creating items is done by the @code{--add} option. New work items must have text to go with them, which you can supply with the @code{--text} option. You can also supply a due date with the @command{--date} option, with a date in the valid format. Alternatively, you can use the @code{--interactive} option, which will prompt you instead for the required text, and due date.
+
+@heading Demo
+Today is the 29@sup{th} of January, 2023. I have an important presentation to give on the 1@sup{st} of Febuary. But first, I must finish the presentation! I can create a work item for this by doing the following:
+
+@example
+work-planner --add --text "Finish presentation" --date "1/2/2023"
+@end example
+
+Here, I've created a new work item with the text "Finish presentation", and I've set the due date to "1/2/2023". I think I'm going to aim to finish it tomorrow so I'll designate it for that day. I run the following command to do so:
+
+@example
+work-planner --designate --date "30/1/2023"
+@end example
+
+Now, when I look at the summary screen by running the program without any arguments, I can see the changes I've made reflected. Specifically, the new item appears because it is due in the next 7 days.
+
+I can verify that this item has been designated for tomorrow by running the following command:
+
+@example
+work-planner --view-day "30/1/2023"
+@end example
+
+This shows me all of the work I have designated on that day, and there I can see the newly created work item.
+
+Finally, I should probably clean the microwave today. I create this work item with the following command:
+
+@example
+work-planner -a -t "Clean the microwave" --designate-today
+@end example
+
+You'll notice that I've used some shorthands: @code{-a}, and @code{-t} are equivalent to @code{--add}, and @code{--text} respectively. I've also used @code{--designate-today} in order to designate this newly created work item. Alternatively, I could've run the following 2 commands:
+
+@example
+work-planner --add --text "Clean the microwave"
+work-planner --designate [work-item-id]
+@end example
+
+When running the first line above, it will create the new work item, and it will print to standard out the ID for this new work item. I can then replace the @code{[work-item-id]} with this ID I was given in the previous command.
+
+@node Purging
+@section Purging
+
+Overtime, you will probably end up with lots of work items that are no longer relevant to you. At present, purgable work items are defined as items that have been completed before today, and with no due date, or one that has passed. You can purge these items with @code{work-planner --purge}, or using the shorthand @code{-p}. Running this command will tell you how many items (if any) will be purged, and then will ask for confirmation to run the purge. You can bypass this by adding the @code{--no-confirm}, or @code{-y} flag.
+
+@node Implementation
+@chapter Implementation
+
+This chapter is to be written.
 
 @bye
