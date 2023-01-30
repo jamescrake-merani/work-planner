@@ -30,6 +30,7 @@ Add a new work item.
 .TP
 .BR \-\-designate-today
 Used when creating a new work item to immediately designate it to the current day.
+.TP
 .BR \-t ", " \--text
 Specify the text of the work item being added.
 .TP
