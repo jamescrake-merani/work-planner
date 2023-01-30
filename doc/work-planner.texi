@@ -153,6 +153,31 @@ Overtime, you will probably end up with lots of work items that are no longer re
 @node Implementation
 @chapter Implementation
 
-This chapter is to be written.
+This chapter will discuss how the program has been implemented. If you have any questions then feel free to email me. Please note that there is documentation within all the code files as well, and these should complement the information given in this manual.
+
+@menu
+* Representation:: How work items are represented
+* Storage:: How work items are stored
+* Filters:: How filters have been used
+@end menu
+
+@node Representation
+@section Representation
+
+Work items are represented as an association list (see @code{work-planner/date-json.scm}).
+
+For the dates, work-planner uses the SRFI-19 library. Dates are represented through the date type in that library, and sometimes they are converted into julian days for certain calculations.
+
+@node Storage
+@section Storage
+
+At present, work items are stored in JSON format, and in the file located at @code{$HOME/.local/share/work-planner/items.json}. If this file does not exist when the program is started, it should create it automatically (and its parent directory).
+
+As mentioned earlier, dates are represented as SRFI-19 dates but this presents a problem because they cannot be serialised into JSON. To get around this, before serialising the work item assoc list, all the dates themselves are converted into association lists, and these association lists will then be serialised into JSON alongside the rest of the work item.
+
+@node Filters
+@section Filters
+
+Various filters have been written for work items which are used for presenting work items to the user based on what they want to see. They can be found in @code{work-planner/filters.scm}.
 
 @bye
