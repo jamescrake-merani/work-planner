@@ -124,7 +124,18 @@
   (filter filter-no-due-date test-items))
 
 (test-equal ;; Reminder that this list is what has NOT being purged
-    test-items ;; TODO: Right now, there are no items that should be purged. Fix this.
+    (take-items test-items-alist '("Designated Today"
+                                   "Designated Yesterday"
+                                   "Designated 3 days ago"
+                                   "Due in 2 days"
+                                   "Due in 4 days"
+                                   "Due in 7 days"
+                                   "Due in 8 days"
+                                   "Due in 10 days"
+                                   "Due in 14 days"
+                                   "Completed Today"
+                                   "Completed due tomorrow"
+                                   "Completed due yesterday"))
   (filter (make-filter-purgable base-date) test-items))
 
 (test-end "filter-tests")
