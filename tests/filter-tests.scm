@@ -37,49 +37,59 @@
   (fold (lambda (item a-lst) (cons (cons (work-item-text item) item) a-lst))
           '() items))
 
+(define (add-random-times items)
+  (map (lambda (item)
+         (append
+          (list (cons "due-date" (if (work-item-due-date item) (on-date-random-time (work-item-due-date item)) #f))
+                (cons "designated-completion-dates" (if (work-item-designated-completion-dates item) (on-date-random-time (work-item-designated-completion-dates item)) #f))
+                (cons "completed" (if (work-item-completed? item) (on-date-random-time (work-item-completed? item)) #f)))
+          (alist-delete "due-date" (alist-delete "designated-completion-dates" item))))
+       items))
+
 (define test-items
-  (list
-   (work-item
-    #:text "Designated Today"
-    #:designated-completion-dates base-date)
-   (work-item
-    #:text "Designated Yesterday"
-    #:designated-completion-dates (after-base-date -1))
-   (work-item
-    #:text "Designated 3 days ago"
-    #:designated-completion-dates (after-base-date -3))
-   (work-item
-    #:text "Due in 2 days"
-    #:due-date (after-base-date 2))
-   (work-item
-    #:text "Due in 4 days"
-    #:due-date (after-base-date 4))
-   (work-item
-    #:text "Due in 7 days"
-    #:due-date (after-base-date 7))
-   (work-item
-    #:text "Due in 8 days"
-    #:due-date (after-base-date 8))
-   (work-item
-    #:text "Due in 10 days"
-    #:due-date (after-base-date 10))
-   (work-item
-    #:text "Due in 14 days"
-    #:due-date (after-base-date 14))
-   (work-item
-    #:text "Completed Today"
-    #:completed base-date)
-   (work-item
-    #:text "Completed Yesterday"
-    #:completed (after-base-date -1))
-   (work-item
-    #:text "Completed due tomorrow"
-    #:due-date (after-base-date 1)
-    #:completed base-date)
-   (work-item
-    #:text "Completed due yesterday"
-    #:due-date (after-base-date -1)
-    #:completed base-date)))
+  (add-random-times
+   (list
+    (work-item
+     #:text "Designated Today"
+     #:designated-completion-dates base-date)
+    (work-item
+     #:text "Designated Yesterday"
+     #:designated-completion-dates (after-base-date -1))
+    (work-item
+     #:text "Designated 3 days ago"
+     #:designated-completion-dates (after-base-date -3))
+    (work-item
+     #:text "Due in 2 days"
+     #:due-date (after-base-date 2))
+    (work-item
+     #:text "Due in 4 days"
+     #:due-date (after-base-date 4))
+    (work-item
+     #:text "Due in 7 days"
+     #:due-date (after-base-date 7))
+    (work-item
+     #:text "Due in 8 days"
+     #:due-date (after-base-date 8))
+    (work-item
+     #:text "Due in 10 days"
+     #:due-date (after-base-date 10))
+    (work-item
+     #:text "Due in 14 days"
+     #:due-date (after-base-date 14))
+    (work-item
+     #:text "Completed Today"
+     #:completed base-date)
+    (work-item
+     #:text "Completed Yesterday"
+     #:completed (after-base-date -1))
+    (work-item
+     #:text "Completed due tomorrow"
+     #:due-date (after-base-date 1)
+     #:completed base-date)
+    (work-item
+     #:text "Completed due yesterday"
+     #:due-date (after-base-date -1)
+     #:completed base-date))))
 
 (define test-items-alist
   (create-test-data test-items))
