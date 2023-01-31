@@ -123,8 +123,7 @@
                              "Completed Yesterday"))
   (filter filter-no-due-date test-items))
 
-(test-equal
-    ;; Reminder that this list is what has NOT being purged
+(test-equal ;; Reminder that this list is what has NOT being purged
     test-items ;; TODO: Right now, there are no items that should be purged. Fix this.
   (filter (make-filter-purgable base-date) test-items))
 
