@@ -7,6 +7,8 @@
 
 (define base-date (string->date "15/1/2023" "~d/~m/~Y"))
 
+(set! *random-state* (time-second (current-time)))
+
 (define* (after-base-date days #:optional (hours 0) (minutes 0))
   "Add DAYS to the base date."
   (let ((date-just-day (julian-day->date (+ (date->julian-day base-date) days))))
@@ -22,6 +24,9 @@
          (date-year date-just-day)
          0)))
   )
+
+(define (on-date-random-time dat)
+  (julian-day->date (+ (date->julian-day dat) (random 1.0))))
 
 (define (create-test-data items)
   (map (lambda (item iteration)
