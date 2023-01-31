@@ -7,7 +7,7 @@
 
 (define base-date (string->date "15/1/2023" "~d/~m/~Y"))
 
-(set! *random-state* (time-second (current-time)))
+(set! *random-state* (random-state-from-platform))
 
 (define* (after-base-date days #:optional (hours 0) (minutes 0))
   "Add DAYS to the base date."
