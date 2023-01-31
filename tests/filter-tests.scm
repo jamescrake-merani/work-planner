@@ -1,4 +1,5 @@
-(use-modules (srfi srfi-64) (srfi srfi-19)
+(use-modules (srfi srfi-64)
+             (srfi srfi-19)
              (srfi srfi-26)
              (srfi srfi-1)
              (work-planner filters)
