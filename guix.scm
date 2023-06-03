@@ -83,4 +83,3 @@
   (home-page
     "https://github.com/jamescrake-merani/work-planner")
   (license license:glp3+))
-
