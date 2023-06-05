@@ -8,7 +8,7 @@
   (description "A tool for managing your work.")
   (home-page
     "https://github.com/jamescrake-merani/work-planner")
-  (license glp3+)
+  (license gpl3+)
   (dependencies `())
   (skip ())
   (files (libraries

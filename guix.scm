@@ -82,5 +82,5 @@
   (description "A tool for managing your work.")
   (home-page
     "https://github.com/jamescrake-merani/work-planner")
-  (license license:glp3+))
+  (license license:gpl3+))
 
