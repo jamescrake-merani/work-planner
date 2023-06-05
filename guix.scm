@@ -79,7 +79,7 @@
   (inputs `(("guile" ,guile-3.0)))
   (propagated-inputs
     `(("guile-readline" ,guile-readline)
-      ("guile-json" ,guile-json)))
+      ("guile-json" ,guile-json-4)))
   (synopsis "")
   (description "A tool for managing your work.")
   (home-page

@@ -10,7 +10,7 @@
     "https://github.com/jamescrake-merani/work-planner")
   (license gpl3+)
   (dependencies `(("guile-readline" (ice-9 readline) ,guile-readline)
-                  ("guile-json" (json) ,guile-json)))
+                  ("guile-json" (json) ,guile-json-4)))
   (skip ())
   (files (libraries
            ((scheme-file "f")
