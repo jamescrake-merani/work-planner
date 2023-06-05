@@ -51,7 +51,7 @@
                                           (string-append
                                             (assoc-ref inputs input)
                                             path))
-                                        ,''())))))
+                                        ,''("guile-readline" "guile-json"))))))
                    (out (assoc-ref outputs "out"))
                    (bin (string-append out "/bin/"))
                    (site (uncompiled-dir out "")))
@@ -77,7 +77,9 @@
       ("pkg-config" ,pkg-config)
       ("texinfo" ,texinfo)))
   (inputs `(("guile" ,guile-3.0)))
-  (propagated-inputs `())
+  (propagated-inputs
+    `(("guile-readline" ,guile-readline)
+      ("guile-json" ,guile-json)))
   (synopsis "")
   (description "A tool for managing your work.")
   (home-page
