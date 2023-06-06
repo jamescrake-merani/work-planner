@@ -4,7 +4,7 @@ AC_INIT(work-planner, 0.1)
 AC_SUBST(HVERSION, "\"0.1\"")
 AC_SUBST(AUTHOR, "\"James Crake-Merani\"")
 AC_SUBST(COPYRIGHT, "'(2022)")
-AC_SUBST(LICENSE, glp3+)
+AC_SUBST(LICENSE, gpl3+)
 AC_CONFIG_SRCDIR(work-planner)
 AC_CONFIG_AUX_DIR([build-aux])
 AM_INIT_AUTOMAKE([1.12 gnu silent-rules subdir-objects  color-tests parallel-tests -Woverride -Wno-portability])
@@ -23,7 +23,8 @@ if test "x$GUILD" = "x"; then
 fi
 
 dnl Hall auto-generated guile-module dependencies
-
+GUILE_MODULE_REQUIRED([ice-9 readline])
+GUILE_MODULE_REQUIRED([json])
 
 dnl Installation directories for .scm and .go files.
 guilemoduledir="${datarootdir}/guile/site/$GUILE_EFFECTIVE_VERSION"
