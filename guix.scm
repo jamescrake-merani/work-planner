@@ -2,6 +2,9 @@
   (guix packages)
   ((guix licenses) #:prefix license:)
   (guix download)
+  (guix git-download)
+  (guix utils)
+  (guix gexp)
   (guix build-system gnu)
   (gnu packages)
   (gnu packages autotools)
@@ -10,13 +13,21 @@
   (gnu packages pkg-config)
   (gnu packages texinfo))
 
+(define vcs-file?
+  ;; Return true if the given file is under version control.
+  (or (git-predicate (current-source-directory))
+      (const #t)))                                ;not in a Git checkout
+
 (package
   (name "work-planner")
   (version "0.1")
-  (source "./work-planner-0.1.tar.gz")
+  (source (local-file "." "guile-checkout"
+                      #:recursive? #t
+                      #:select? vcs-file?))
   (build-system gnu-build-system)
   (arguments
-    `(#:modules
+    `(#:tests? #f
+      #:modules
       ((ice-9 match)
        (ice-9 ftw)
        ,@%gnu-build-system-modules)
