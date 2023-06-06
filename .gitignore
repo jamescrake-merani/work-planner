@@ -46,8 +46,6 @@
 /doc/*.vr
 /doc/*.vrs
 /doc/stamp-vti
-/doc/version.texi
-/doc/version-*.texi
 /m4/*
 /pre-inst-env
 /test-env
