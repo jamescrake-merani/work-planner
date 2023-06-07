@@ -113,7 +113,7 @@
   (let* ((date-str (option-ref options 'date #f)) ;;TODO: Perhaps create a seperate date field.
          (desig-date (if date-str (string->date date-str "~d/~m/~Y") (current-date)))
          (old-work-item (get-work-item items (string->number designate))))
-    (if (past-date? desig-date (current-date))
+    (if (past-date? desig-date (current-date) #f)
         (format #t "Warning: you appear to have entered a date which is in the past.~%"))
     (work-item-replace old-work-item (designate-work-item-date old-work-item desig-date) items)))
 
