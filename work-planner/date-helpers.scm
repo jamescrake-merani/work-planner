@@ -27,13 +27,19 @@ they represent."
    (= (date-month date1) (date-month date2))
    (= (date-year date1) (date-year date2))))
 
+(define (date-remove-time d)
+  "Removes the time component of D. This is acheived by creating a new date with
+the time component of D set to midnight"
+  (make-date 0 0 0 0 (date-day d) (date-month d) (date-year d) 0))
+
 (define* (days-between-dates date1 date2 #:optional truncate?)
   "Calculates the amount of days between DATE1, and DATE2. The optional TRUNCATE?
 parameter performs the calculation on truncated froms of DATE1, and DATE2"
   (let* ((dates-lst (list date1 date2))
-         (julian-days-lst (map date->julian-day dates-lst))
-         (dates-truncated (if truncate? (map truncate julian-days-lst) julian-days-lst)))
-    (apply - dates-truncated)))
+         (times-removed (map date-remove-time dates-lst))
+         (times (map date->time-utc times-removed))
+         (seconds (time-second (apply time-difference times))))
+    (/ seconds (* 24 3600))))
 (export days-between-dates)
 
 (define-public (is-midnight? d)
