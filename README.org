@@ -2,4 +2,37 @@
 
 #+TITLE: README for Work-Planer
 
-In development. I'll write this later. I promise.
+* Work Planner
+
+This is a program to keep track of all the work items that you must do each day. It is currently available via a command line interface but in future I may develop a GTK interface as well. If you have any queries, or suggestions than feel free to contact me. See [[https://jamescm.co.uk][my website]] for contact details.
+** Design Philosophy
+I created this program because often I would come up with things I needed to do, and would just forget about them. I needed a program to keep track of this, but beyond that I wanted this program to facilitate me in planning my days as well. I wanted to be able to 'designate' work items to be completed on certain days. This 'designation' might be done days in advance, or perhaps just when I wake up. I would want to have a look at the bank of work items I'd noted, and choose which ones I was going to focus on that day. I've built this program to allow me to do this, and I hope you find it useful as well.
+** Build instructions
+This project uses Guile Hall which in turn uses the GNU build system. Guile Hall also generates a guix.scm file in this repo which you can use to build, and install the project with the guix package manager by running the following command.
+#+begin_src bash
+guix package -f guix.scm
+#+end_src
+Otherwise, you can do the normal autoconf commands:
+*** Build dependencies
+- autoconf
+- automake
+- pkg-config
+- texinfo
+- guile-readline
+- guile-json
+*** Commands
+#+BEGIN_SRC bash
+autoreconf -vfi
+./configure
+make
+sudo make install
+#+END_SRC
+** Documentation
+The man page has a detailed description of the command line interface for the program. For individual functions, most of them are documented inline in the source code.
+** Future work
+I have a handful of ambitions to take this project further. They are:
+- Ability to tag work items, and organise this on the summary screen
+- Ability to customise the summary screen.
+- More customisation in general.
+- More colour schemes.
+- Going beyong a command-line interface to something like a GTK interface.
