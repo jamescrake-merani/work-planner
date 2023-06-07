@@ -50,7 +50,7 @@ parameter performs the calculation on truncated froms of DATE1, and DATE2"
    (= (date-hour d) 0)))
 
 (define* (past-date? date1 date2 #:optional (inclusive #t))
-  "Calculates whether DATE1 is prior to DATE2. When INCLUSIVE is false, the
+  "Calculates whether DATE2 is prior to DATE1. When INCLUSIVE is false, the
 function will evaluate to false if the two dates fall on the same day."
   (let ((comparer (if inclusive >= >)))
     (comparer (days-between-dates date1 date2 #t) 0)))
