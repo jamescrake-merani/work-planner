@@ -85,6 +85,6 @@ et cetera."
   (let* ((capitalised-date (string-capitalize date-str))
         (day-num (assoc-ref weekdays-alist capitalised-date)))
     (cond
-     ((= capitalised-date "TODAY") (current-date))
+     ((string=? capitalised-date "TODAY") (current-date))
      ((not day-num) (add-days (current-date) (days-until-weekday day-num)))
      (else (string->date date-str "~d/~m/~Y")))))
