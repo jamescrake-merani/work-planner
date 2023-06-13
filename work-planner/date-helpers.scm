@@ -75,3 +75,12 @@ function will evaluate to false if the two dates fall on the same day."
 (define-public (add-days d days)
   (julian-day->date (+ days (date->julian-day d))))
 
+
+(define (parse-date date-str)
+  "Parse DATE-STR into a SRFI-19 date."
+  (let* ((capitalised-date (string-capitalize date-str))
+        (day-num (assoc-ref weekdays-alist capitalised-date)))
+    (cond
+     ((= capitalised-date "TODAY") (current-date))
+     ((not day-num) (add-days (current-date) (days-until-weekday day-num)))
+     (else (string->date date-str "~d/~m/~Y")))))
