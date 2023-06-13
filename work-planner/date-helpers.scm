@@ -80,7 +80,7 @@ et cetera."
   (julian-day->date (+ days (date->julian-day d))))
 
 
-(define (parse-date date-str)
+(define-public (parse-date date-str)
   "Parse DATE-STR into a SRFI-19 date."
   (let* ((capitalised-date (string-capitalize date-str))
         (day-num (assoc-ref weekdays-alist capitalised-date)))
