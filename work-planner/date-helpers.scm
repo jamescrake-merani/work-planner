@@ -17,6 +17,16 @@
 (define-module (work-planner date-helpers))
 (use-modules (srfi srfi-19))
 
+(define weekdays-alist
+  '(("SUNDAY" . 0)
+    ("MONDAY" . 1)
+    ("TUESDAY" . 2)
+    ("WEDNESDAY" . 3)
+    ("THURSDAY" . 4)
+    ("FRIDAY" . 5)
+    ("SATURDAY" . 6)
+    ("SUNDAY" . 7)))
+
 (define-public (same-day? date1 date2)
   "Works out if DATE1, and DATE2 are on the same day regardless of what exact time
 they represent."
