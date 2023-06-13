@@ -89,7 +89,7 @@
             (if interactive?
                 (interactive-create-work-item)
                 (work-item #:text item-text
-                           #:due-date (if due-str (string->date due-str "~d/~m/~Y") #f)
+                           #:due-date (if due-str (parse-date due-str) #f)
                            #:designated-completion-dates (if designate-today? (current-date) #f))))
            (new-work-items-lst (add-work-item-to-lst new-work-item items)))
       (save-items!
@@ -111,7 +111,7 @@
 
 (define (designate-action options items designate)
   (let* ((date-str (option-ref options 'date #f)) ;;TODO: Perhaps create a seperate date field.
-         (desig-date (if date-str (string->date date-str "~d/~m/~Y") (current-date)))
+         (desig-date (if date-str (parse-date date-str) (current-date)))
          (old-work-item (get-work-item items (string->number designate))))
     (if (past-date? (current-date) desig-date #f)
         (format #t "Warning: you appear to have entered a date which is in the past.~%"))
@@ -135,7 +135,7 @@
       (let ((new-item (work-item
                        #:id id
                        #:text (if (eq? new-text 'unchanged) (work-item-text old-item) new-text)
-                       #:due-date (if (eq? date-str 'unchanged) (work-item-due-date old-item) (string->date date-str "~d/~m/~Y"))
+                       #:due-date (if (eq? date-str 'unchanged) (work-item-due-date old-item) (parse-date date-str))
                        #:designated-completion-dates (work-item-designated-completion-dates old-item)
                        #:completed (work-item-completed? old-item))))
         (save-items! (work-item-replace old-item new-item items))))))
@@ -147,7 +147,7 @@
         (save-items! (filter (lambda (i) (not (= (work-item-id i) id))) items)))))
 
 (define (action-view-day options date-str items)
-  (display (view-day items (string->date date-str "~d/~m/~Y"))))
+  (display (view-day items (parse-date date-str))))
 
 ;; FIXME: There is no error handling here.
 (define (main args)
