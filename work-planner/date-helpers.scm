@@ -55,3 +55,10 @@ function will evaluate to false if the two dates fall on the same day."
   (let ((comparer (if inclusive >= >)))
     (comparer (days-between-dates date1 date2 #t) 0)))
 (export past-date?)
+
+(define-public (days-until-weekday d until-weekday)
+  (let ((d-week-number (date-week-day d)))
+    (if (>= d-week-number until-weekday)
+        (+ (- 7 d-week-number) until-weekday)
+        (- until-weekday d-week-number))))
+
