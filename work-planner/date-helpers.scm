@@ -86,5 +86,5 @@ et cetera."
         (day-num (assoc-ref weekdays-alist capitalised-date)))
     (cond
      ((string=? capitalised-date "TODAY") (current-date))
-     ((not day-num) (add-days (current-date) (days-until-weekday day-num)))
+     (day-num (add-days (current-date) (days-until-weekday day-num)))
      (else (string->date date-str "~d/~m/~Y")))))
