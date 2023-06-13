@@ -62,3 +62,6 @@ function will evaluate to false if the two dates fall on the same day."
         (+ (- 7 d-week-number) until-weekday)
         (- until-weekday d-week-number))))
 
+(define-public (add-days d days)
+  (julian-day->date (+ days (date->julian-day d))))
+
