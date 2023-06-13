@@ -65,7 +65,7 @@ function will evaluate to false if the two dates fall on the same day."
     (comparer (days-between-dates date1 date2 #t) 0)))
 (export past-date?)
 
-(define-public (days-until-weekday d until-weekday)
+(define* (days-until-weekday until-weekday #:optional d)
   "Calculate the amount of days until the next occurance of UNTIL-WEEKDAY after
 the date D. UNTIL-WEEKDAY is represented as an integer where 0=Sunday, 1=Monday
 et cetera."
@@ -73,6 +73,7 @@ et cetera."
     (if (>= d-week-number until-weekday)
         (+ (- 7 d-week-number) until-weekday)
         (- until-weekday d-week-number))))
+(export days-until-weekday)
 
 (define-public (add-days d days)
   "Add DAYS onto D"
