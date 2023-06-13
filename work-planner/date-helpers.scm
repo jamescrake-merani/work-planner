@@ -82,7 +82,7 @@ et cetera."
 
 (define-public (parse-date date-str)
   "Parse DATE-STR into a SRFI-19 date."
-  (let* ((capitalised-date (string-capitalize date-str))
+  (let* ((capitalised-date (string-upcase date-str))
         (day-num (assoc-ref weekdays-alist capitalised-date)))
     (cond
      ((string=? capitalised-date "TODAY") (current-date))
