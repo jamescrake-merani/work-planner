@@ -17,7 +17,12 @@
 (define-module (work-planner date-helpers))
 (use-modules (srfi srfi-19))
 
-(define weekdays-alist
+(define (shorten-weekdays weekdays-alist)
+  "Evals to a new association list with each weekday string in WEEKDAYS-ALIST only
+having the first 3 characters."
+  (map (lambda (d) (cons (string-take (car d) 3) (cdr d))) weekdays-alist))
+
+(define weekdays-alist-full
   '(("SUNDAY" . 0)
     ("MONDAY" . 1)
     ("TUESDAY" . 2)
@@ -25,6 +30,12 @@
     ("THURSDAY" . 4)
     ("FRIDAY" . 5)
     ("SATURDAY" . 6)))
+
+;; weekdays-alist-full is a sublist of weekdays-alist but weekdays-alist will
+;; also contain the shortened weekday names as well to make it easier for users
+;; to type them in.
+
+(define weekdays-alist (append weekdays-alist-full (shorten-weekdays weekdays-alist-full)))
 
 (define-public (same-day? date1 date2)
   "Works out if DATE1, and DATE2 are on the same day regardless of what exact time
